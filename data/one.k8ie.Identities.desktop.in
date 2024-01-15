@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=identities
+Exec=identities
+Icon=one.k8ie.Identities
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

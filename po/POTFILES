@@ -1,0 +1,6 @@
+data/one.k8ie.Identities.desktop.in
+data/one.k8ie.Identities.metainfo.xml.in
+data/one.k8ie.Identities.gschema.xml
+src/main.py
+src/window.py
+src/window.ui
