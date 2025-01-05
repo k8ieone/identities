@@ -32,6 +32,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     toolbarview = Gtk.Template.Child()
     splitview = Gtk.Template.Child()
     password_list_view = Gtk.Template.Child()
+    password_view = Gtk.Template.Child()
+    password_box = Gtk.Template.Child()
 
 
     def __init__(self, **kwargs):
@@ -44,7 +46,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             print("Skipping welcome page...")
             self.toolbarview.set_content(self.splitview)
         self.bind_actions()
-        self.store = passpy.store.Store()
+        self.store = passpy.store.Store(gpg_bin="gpg")
         self.generate_passwords_list()
 
     def on_start_action(self, widget, _):
@@ -62,7 +64,10 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def on_password_action(self, widget, _):
         """Callback for the win.password action."""
-        print("Showing password {}".format(_))
+        print("Showing password {}".format(_.unpack()))
+        content = self.store.get_key(_.unpack())
+        self.password_box.set_label(content)
+        self.splitview.set_content(self.password_view)
 
     def on_back_action(self, widget, _):
         """Callback for the win.password action."""
