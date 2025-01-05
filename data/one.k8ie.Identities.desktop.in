@@ -1,8 +1,10 @@
 [Desktop Entry]
-Name=Identities
+Name=@app_name@
 Exec=identities
-Icon=one.k8ie.Identities
+Icon=@app_id@
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=Utility;
+Keywords=password;logins;
+Comment=smt
 StartupNotify=true
