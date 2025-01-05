@@ -1,7 +1,7 @@
 {
     "app-id" : "one.k8ie.Identities",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "45",
+    "runtime-version" : "47",
     "sdk" : "org.gnome.Sdk",
     "command" : "identities",
     "finish-args" : [
@@ -30,7 +30,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/k8ieone/Documents"
+                    "url" : "file:///home/k8ie/Documents"
                 }
             ]
         }
