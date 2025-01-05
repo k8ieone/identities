@@ -4,43 +4,80 @@ using Adw 1;
 template $IdentitiesWindow : Adw.ApplicationWindow {
   default-width: 600;
   default-height: 300;
+  Adw.Breakpoint {
+    condition ("max-width: 550sp")
+    setters {
+      splitview.collapsed: true;
+    }
+  }
   content: 
-  Adw.ToolbarView {
+  Adw.ToolbarView toolbarview {
     [top]
     Adw.HeaderBar header_bar {
-      ToggleButton button_search {
-        icon-name: "system-search-symbolic";
+      Gtk.Button {
+        icon-name: "go-previous-symbolic";
+        tooltip-text: "Back";
+        action-name: "win.back";
       }
+      show-title: true;
       [end]
-      MenuButton {
+      Gtk.MenuButton {
         primary: true;
         icon-name: "open-menu-symbolic";
         tooltip-text: _("Menu");
         menu-model: primary_menu;
       }
     }
-    SearchBar searchbar {
-      //key-capture-widget: template;
+    content: welcome;
+  };
+}
 
-      SearchEntry searchentry {
-        search-delay: 100;
-        placeholder-text: _("Search for fruits");
-        width-request: 400;
-      }
-    }
-    content: 
-    Label label {
-      label: "Hello, World!";
+Adw.NavigationSplitView splitview {
+  //collapsed: false;
+  //show-content: false;
+  sidebar: password_list;
+  content: empty_password;
+}
 
-      styles [
-        "title-1",
-      ]
-    }
+Adw.NavigationPage empty_password {
+  title: "Select a password";
+  child: Adw.StatusPage {
+    title: "No password selected";
+    description: "Select a password entry to edit";
+  };
+}
 
-    ;
-  }
+Adw.NavigationPage password {
+  title: "Password";
+  child: Adw.StatusPage {
+    title: "Password";
+  };
+}
 
-  ;
+Adw.NavigationPage password_list {
+  title: "Password list";
+  child: Gtk.ScrolledWindow {
+    child: Gtk.ListBox password_list_view {
+      styles ["boxed-list"]
+      selection-mode: none;
+    };
+  };
+}
+
+Adw.StatusPage welcome {
+  title: "Welcome to Identities!";
+  description: "The standard unix password manager for GNOME";
+  child: Adw.Clamp {
+    maximum-size: 250;
+    child: Gtk.Button start {
+      styles ["suggested-action", "pill"]
+      label: "Let's get started!";
+      action-name: "win.start";
+      //child: Adw.ButtonContent {
+      //  label: "Let's get started";
+      //};
+    };
+  };
 }
 
 menu primary_menu {

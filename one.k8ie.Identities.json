@@ -23,6 +23,7 @@
         "*.a"
     ],
     "modules" : [
+        "passpy.json",
         {
             "name" : "identities",
             "builddir" : true,

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="identities">
-	<schema id="one.k8ie.Identities" path="/one/k8ie/Identities/">
-	</schema>
+  <schema id="one.k8ie.Identities" path="/one/k8ie/Identities/">
+    <key name="stores" type="as">
+      <default>[]</default>
+      <summary>Configured password stores</summary>
+      <description>List of configured password stores</description>
+    </key>
+  </schema>
 </schemalist>
