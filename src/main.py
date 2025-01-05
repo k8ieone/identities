@@ -1,6 +1,6 @@
 # main.py
 #
-# Copyright 2024 Alex
+# Copyright 2024 Kate
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,10 +53,10 @@ class IdentitiesApplication(Adw.Application):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name='identities',
                                 application_icon='one.k8ie.Identities',
-                                developer_name='Alex',
+                                developer_name='Kate',
                                 version='0.1.0',
-                                developers=['Alex'],
-                                copyright='© 2024 Alex')
+                                developers=['Kate'],
+                                copyright='© 2025 Kate')
         about.present()
 
     def on_preferences_action(self, widget, _):
