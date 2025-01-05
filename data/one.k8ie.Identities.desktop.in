@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=@app_name@
 Exec=identities
-Icon=@app_id@
+Icon=@app_id@.svg
 Terminal=false
 Type=Application
 Categories=Utility;
