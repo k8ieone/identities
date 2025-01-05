@@ -47,10 +47,15 @@ Adw.NavigationPage empty_password {
   };
 }
 
-Adw.NavigationPage password {
+Adw.NavigationPage password_view {
   title: "Password";
   child: Adw.StatusPage {
-    title: "Password";
+    child: Adw.Clamp {
+      maximum-size: 250;
+      child: Gtk.Frame password_box {
+        label: "pwd";
+      };
+    };
   };
 }
 
