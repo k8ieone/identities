@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=@app_name@
+Name=Identities
 Exec=identities
 Icon=one.k8ie.Identities
 Terminal=false
