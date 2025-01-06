@@ -2,8 +2,9 @@ using Gtk 4.0;
 using Adw 1;
 
 template $IdentitiesWindow : Adw.ApplicationWindow {
-  default-width: 600;
-  default-height: 300;
+  title: "Identities";
+  default-height: 450;
+  default-width: 800;
   Adw.Breakpoint {
     condition ("max-width: 550sp")
     setters {
@@ -19,7 +20,7 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
         tooltip-text: "Back";
         action-name: "win.back";
       }
-      show-title: true;
+      show-title: false;
       [end]
       Gtk.MenuButton {
         primary: true;
@@ -47,24 +48,58 @@ Adw.NavigationPage empty_password {
   };
 }
 
-Adw.NavigationPage password_view {
+Adw.NavigationPage password_page {
   title: "Password";
   child: Adw.StatusPage {
     child: Adw.Clamp {
-      maximum-size: 250;
-      child: Gtk.Frame password_box {
-        label: "pwd";
+      maximum-size: 450;
+      child: Gtk.Box {
+        orientation: vertical;
+        spacing: 20;
+        Adw.PreferencesGroup password_group {
+          //title: "Password";
+          //description: "./path/to/password";
+
+          //header-suffix: Gtk.Button {
+          //  Adw.ButtonContent {
+          //    icon-name: "list-add-symbolic";
+          //    label: "Add row";
+          //  }
+          //};
+
+          //Adw.PasswordEntryRow {
+          //  title: "Password";
+          //  text: "AmazingPassword";
+          //  editable: false;
+          //}
+
+          //Adw.ActionRow {
+          //  subtitle: "login";
+          //  title: "k8ie";
+            // icon-name: "copy";
+            // text: "k8ie";
+            // editable: false;
+          }
+
+        Adw.Clamp {
+          maximum-size: 300;
+          child: Gtk.Button {
+            styles ["suggested-action", "pill"]
+            label: "Edit";
+            action-name: "win.edit";
+          };
+        }
+        };
       };
     };
-  };
-}
+  }
 
 Adw.NavigationPage password_list {
   title: "Password list";
   child: Gtk.ScrolledWindow {
     child: Gtk.ListBox password_list_view {
       styles ["boxed-list"]
-      selection-mode: none;
+      //selection-mode: none;
     };
   };
 }
