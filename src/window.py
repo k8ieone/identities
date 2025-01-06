@@ -40,7 +40,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
         self.settings = Gio.Settings.new("one.k8ie.Identities")
         self.builder = Gtk.Builder()
-        self.cur_dir = "."
+        self.cur_dir = Path(".")
         print(self.settings.get_strv("stores"))
         if len(self.settings.get_strv("stores")) > 0:
             print("Skipping welcome page...")
@@ -59,7 +59,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
         print("Entering directory {}".format("{}".format(_.unpack())))
-        self.cur_dir = "{}".format(_.unpack())
+        self.cur_dir = Path(_.unpack())
         self.generate_passwords_list()
 
     def on_password_action(self, widget, _):
@@ -71,8 +71,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def on_back_action(self, widget, _):
         """Callback for the win.password action."""
-        parent = str(Path(self.cur_dir).parent)
-        self.cur_dir = parent
+        print("Back to directory {}".format("{}".format(self.cur_dir.parent)))
+        self.cur_dir = self.cur_dir.parent
         self.generate_passwords_list()
 
     def generate_passwords_list(self):
@@ -81,11 +81,13 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         pwds = dir_list[1]
         self.password_list_view.remove_all()
         for entry in dirs:
-            button = Adw.ButtonRow(title=entry, action_name="win.directory", end_icon_name="go-next-symbolic")
+            p = Path(entry)
+            button = Adw.ButtonRow(title=str(p.parts[-1]), action_name="win.directory", end_icon_name="go-next-symbolic")
             button.set_action_target_value(GLib.Variant("s", entry))
             self.password_list_view.append(button)
         for entry in pwds:
-            button = Adw.ButtonRow(title=entry, action_name="win.password")
+            p = Path(entry)
+            button = Adw.ButtonRow(title=str(p.parts[-1]), action_name="win.password")
             button.set_action_target_value(GLib.Variant("s", entry))
             self.password_list_view.append(button)
 
