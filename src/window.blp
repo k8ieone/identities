@@ -15,11 +15,6 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
   Adw.ToolbarView toolbarview {
     [top]
     Adw.HeaderBar header_bar {
-      Gtk.Button {
-        icon-name: "go-previous-symbolic";
-        tooltip-text: "Back";
-        action-name: "win.back";
-      }
       show-title: false;
       [end]
       Gtk.MenuButton {
@@ -36,7 +31,7 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
 Adw.NavigationSplitView splitview {
   //collapsed: false;
   //show-content: false;
-  sidebar: password_list;
+  sidebar: password_navigation;
   content: empty_password;
 }
 
@@ -94,12 +89,17 @@ Adw.NavigationPage password_page {
     };
   }
 
-Adw.NavigationPage password_list {
-  title: "Password list";
+
+Adw.NavigationPage password_navigation {
   child: Gtk.ScrolledWindow {
-    child: Gtk.ListBox password_list_view {
-      styles ["boxed-list"]
-      //selection-mode: none;
+    child: Adw.NavigationView nav_view {
+    // Adw.NavigationPage password_list {
+    //   title: "Password list";
+    //   child: Gtk.ListBox password_list_view {
+    //     styles ["navigation-sidebar"]
+    //     selection-mode: single;
+    //   };
+    // }
     };
   };
 }
