@@ -25,22 +25,25 @@ from gi.repository import Gdk
 
 from pathlib import Path
 import passpy
+import time
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/window.ui')
 class IdentitiesWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'IdentitiesWindow'
 
     clipboard = Gdk.Display.get_default().get_clipboard()
+
     toolbarview = Gtk.Template.Child()
     splitview = Gtk.Template.Child()
-    password_list_view = Gtk.Template.Child()
     password_page = Gtk.Template.Child()
     password_group = Gtk.Template.Child()
+    nav_view = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.settings = Gio.Settings.new("one.k8ie.Identities")
         self.builder = Gtk.Builder()
+        self.password_store_dir = Path.home() / Path(".password-store")
         self.cur_dir = Path(".")
         print(self.settings.get_strv("stores"))
         if len(self.settings.get_strv("stores")) > 0:
@@ -48,6 +51,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             self.toolbarview.set_content(self.splitview)
         self.bind_actions()
         self.store = passpy.store.Store(gpg_bin="gpg")
+        page = self.build_navigation_page(self.cur_dir)
+        self.nav_view.add(page)
         self.generate_passwords_list()
         self.password_group_children = []
 
@@ -61,6 +66,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
         print("Entering directory {}".format("{}".format(_.unpack())))
+        self.nav_view.push_by_tag(_.unpack())
         self.cur_dir = Path(_.unpack())
         self.generate_passwords_list()
 
@@ -68,11 +74,13 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Callback for the win.password action."""
         for child in self.password_group_children:
             self.password_group.remove(child)
+        self.password_group_children = []
         pwd_path = Path(_.unpack())
-        print("Showing password {}".format(pwd_path))
-        content = self.store.get_key(pwd_path)
-        self.password_group.set_title(str(pwd_path.parts[-1]))
-        self.password_group.set_description(str(pwd_path))
+        rel_path = pwd_path.relative_to(self.password_store_dir)
+        print("Showing password {}".format(str(rel_path)))
+        content = self.store.get_key(str(rel_path).removesuffix(".gpg"))
+        self.password_group.set_title(rel_path.stem)
+        self.password_group.set_description(str(rel_path))
         for index, line in enumerate(content.splitlines()):
             row = Adw.ActionRow()
             title = line
@@ -92,32 +100,52 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             self.password_group.add(row)
         self.splitview.set_content(self.password_page)
 
-    def on_back_action(self, widget, _):
-        """Callback for the win.password action."""
-        print("Back to directory {}".format("{}".format(self.cur_dir.parent)))
-        self.cur_dir = self.cur_dir.parent
-        self.generate_passwords_list()
-
     def on_copy_action(self, widget, _):
         """Callback for the win.password action."""
         print("Copying to clipboard")
         self.clipboard.set(_.unpack())
 
+    def build_list_box(self, directory):
+        """Creates a new list box populated with buttons for a given directory."""
+        box = Gtk.ListBox()
+        pp = self.password_store_dir / directory
+        dirs = sorted([x for x in pp.iterdir() if x.is_dir() and not x.name.startswith('.')], key=str)
+        pwds = sorted([x for x in pp.iterdir() if x.is_file() and not x.name.startswith('.')], key=str)
+        for entry in dirs:
+            #print("Add button: {}".format(entry))
+            #button = Adw.ButtonRow(action_name="navigation.push", action_target=GLib.Variant("s", str(entry)), title=str(entry.parts[-1]))
+            button = Adw.ButtonRow(action_name="win.directory", title=str(entry.parts[-1]), end_icon_name="go-next-symbolic")
+            button.set_action_target_value(GLib.Variant("s", str(entry)))
+            box.append(button)
+        for entry in pwds:
+            #print("Add button: {}".format(entry))
+            button = Adw.ButtonRow(action_name="win.password", title=str(entry.stem))
+            button.set_action_target_value(GLib.Variant("s", str(entry)))
+            box.append(button)
+        return box
+
+    def build_navigation_page(self, directory):
+        """Creates a new Adw.NavigationPage for the password browser for a given directory."""
+        pp = self.password_store_dir / directory
+        bar = Adw.HeaderBar()
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        #print("Build page: {}".format(directory))
+        page = Adw.NavigationPage(tag=str(pp.absolute()), child=box)
+        box.append(bar)
+        box.append(self.build_list_box(directory))
+        return page
+
     def generate_passwords_list(self):
+        """Ran every time the working directory changes, iterates through all directories and builds their pages."""
         dir_list = self.store.list_dir(self.cur_dir)
         dirs = dir_list[0]
         pwds = dir_list[1]
-        self.password_list_view.remove_all()
         for entry in dirs:
             p = Path(entry)
-            button = Adw.ButtonRow(title=str(p.parts[-1]), action_name="win.directory", end_icon_name="go-next-symbolic")
-            button.set_action_target_value(GLib.Variant("s", entry))
-            self.password_list_view.append(button)
-        for entry in pwds:
-            p = Path(entry)
-            button = Adw.ButtonRow(title=str(p.parts[-1]), action_name="win.password")
-            button.set_action_target_value(GLib.Variant("s", entry))
-            self.password_list_view.append(button)
+            pp = self.password_store_dir / p
+            if self.nav_view.find_page(str(pp.absolute())) is None:
+                page = self.build_navigation_page(p)
+                self.nav_view.add(page)
 
     def bind_actions(self):
         actions = {
@@ -136,10 +164,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             "copy": {
                 "method": self.on_copy_action,
                 "ret": GLib.VariantType.new("s")
-            },
-            "back": {
-                "method": self.on_back_action,
-                "ret": None
             }
         }
         for action in actions:
