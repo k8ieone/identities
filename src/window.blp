@@ -11,21 +11,7 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
       splitview.collapsed: true;
     }
   }
-  content: 
-  Adw.ToolbarView toolbarview {
-    [top]
-    Adw.HeaderBar header_bar {
-      show-title: false;
-      [end]
-      Gtk.MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Menu");
-        menu-model: primary_menu;
-      }
-    }
-    content: welcome;
-  };
+  content: welcome;
 }
 
 Adw.NavigationSplitView splitview {
@@ -35,91 +21,105 @@ Adw.NavigationSplitView splitview {
   content: empty_password;
 }
 
+Adw.ToolbarView welcome {
+  [top]
+  Adw.HeaderBar {
+    show-title: false;
+    [end]
+    Gtk.MenuButton {
+      primary: true;
+      icon-name: "open-menu-symbolic";
+      tooltip-text: _("Menu");
+      menu-model: primary_menu;
+    }
+  }
+  content: Adw.StatusPage {
+    title: "Welcome to Identities!";
+    description: "The standard unix password manager for GNOME";
+    child: Adw.Clamp {
+      maximum-size: 250;
+      child: Gtk.Button start {
+        styles ["suggested-action", "pill"]
+        label: "Let's get started!";
+        action-name: "win.start";
+        //child: Adw.ButtonContent {
+        //  label: "Let's get started";
+        //};
+      };
+    };
+  };
+}
+
+
+// Navigation pages for split-view content
 Adw.NavigationPage empty_password {
   title: "Select a password";
-  child: Adw.StatusPage {
-    title: "No password selected";
-    description: "Select a password entry to edit";
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+      [end]
+      Gtk.MenuButton {
+        primary: true;
+        icon-name: "open-menu-symbolic";
+        tooltip-text: _("Menu");
+        menu-model: primary_menu;
+      }
+    }
+    content: Adw.StatusPage {
+      title: "No password selected";
+      description: "Select a password entry to edit";
+    };
   };
 }
 
 Adw.NavigationPage password_page {
-  title: "Password";
-  child: Adw.StatusPage {
-    child: Adw.Clamp {
-      maximum-size: 450;
-      child: Gtk.Box {
-        orientation: vertical;
-        spacing: 20;
-        Adw.PreferencesGroup password_group {
-          //title: "Password";
-          //description: "./path/to/password";
-
-          //header-suffix: Gtk.Button {
-          //  Adw.ButtonContent {
-          //    icon-name: "list-add-symbolic";
-          //    label: "Add row";
-          //  }
-          //};
-
-          //Adw.PasswordEntryRow {
-          //  title: "Password";
-          //  text: "AmazingPassword";
-          //  editable: false;
-          //}
-
-          //Adw.ActionRow {
-          //  subtitle: "login";
-          //  title: "k8ie";
-            // icon-name: "copy";
-            // text: "k8ie";
-            // editable: false;
+  title: "Viewing a password entry";
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+      [end]
+      Gtk.MenuButton {
+        primary: true;
+        icon-name: "open-menu-symbolic";
+        tooltip-text: _("Menu");
+        menu-model: primary_menu;
+      }
+    }
+    content: Adw.StatusPage {
+      child: Adw.Clamp {
+        maximum-size: 450;
+        child: Gtk.Box {
+          orientation: vertical;
+          spacing: 20;
+          // Built in code - see window.on_password_action()
+          Adw.PreferencesGroup password_group {
           }
-
-        Adw.Clamp {
-          maximum-size: 300;
-          child: Gtk.Button {
-            styles ["suggested-action", "pill"]
-            label: "Edit";
-            action-name: "win.edit";
-          };
-        }
+          Adw.Clamp {
+            maximum-size: 300;
+            child: Gtk.Button {
+              styles ["suggested-action", "pill"]
+              label: "Edit";
+              action-name: "win.edit";
+            };
+          }
         };
       };
     };
-  }
+  };
+}
 
 
+// Navigation pages for split-view sidebar
+// Mostly built in code - see window.build_navigation_page()
 Adw.NavigationPage password_navigation {
-  child: Gtk.ScrolledWindow {
-    child: Adw.NavigationView nav_view {
-    // Adw.NavigationPage password_list {
-    //   title: "Password list";
-    //   child: Gtk.ListBox password_list_view {
-    //     styles ["navigation-sidebar"]
-    //     selection-mode: single;
-    //   };
-    // }
-    };
+  child: Adw.NavigationView nav_view {
   };
 }
 
-Adw.StatusPage welcome {
-  title: "Welcome to Identities!";
-  description: "The standard unix password manager for GNOME";
-  child: Adw.Clamp {
-    maximum-size: 250;
-    child: Gtk.Button start {
-      styles ["suggested-action", "pill"]
-      label: "Let's get started!";
-      action-name: "win.start";
-      //child: Adw.ButtonContent {
-      //  label: "Let's get started";
-      //};
-    };
-  };
-}
 
+// Menus
 menu primary_menu {
   section {
     item {
