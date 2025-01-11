@@ -36,6 +36,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     splitview = Gtk.Template.Child()
     browser_nav_view = Gtk.Template.Child()
     viewer_nav_view = Gtk.Template.Child()
+    brkpoint = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -43,10 +44,13 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.builder = Gtk.Builder()
         self.password_store_dir = Path.home() / Path(".password-store")
         self.cur_dir = Path(".")
+        self.cur_viewer_page = None
         print(self.settings.get_strv("stores"))
         if len(self.settings.get_strv("stores")) > 0:
             print("Skipping welcome page...")
             self.set_content(self.splitview)
+            self.brkpoint.connect("apply", self.on_collapse)
+            self.brkpoint.connect("unapply", self.on_uncollapse)
         self.bind_actions()
         self.store = passpy.store.Store(gpg_bin="gpg")
         page = self.build_navigation_page(self.cur_dir)
@@ -73,8 +77,25 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         pwd_path = Path(_.unpack())
         print("Showing password {}".format(str(pwd_path)))
         #self.tst.set_child(self.build_password_group(pwd_path))
-        self.viewer_nav_view.push(self.build_viewer_page(pwd_path))
+        self.cur_viewer_page = self.build_viewer_page(pwd_path)
+        if self.splitview.get_collapsed():
+            self.browser_nav_view.push(self.cur_viewer_page)
+        else:
+            self.viewer_nav_view.push(self.cur_viewer_page)
+        #self.splitview.push(self.password_page)
         #self.splitview.set_content(self.password_page)
+
+    def on_collapse(self, widget):
+        if self.cur_viewer_page is not None:
+            self.viewer_nav_view.pop()
+            self.browser_nav_view.push(self.cur_viewer_page)
+        print("Collapsed")
+
+    def on_uncollapse(self, widget):
+        if self.cur_viewer_page is not None:
+            self.browser_nav_view.pop()
+            self.viewer_nav_view.push(self.cur_viewer_page)
+        print("Uncollapsed")
 
     def on_copy_action(self, widget, _):
         """Callback for the win.password action."""
