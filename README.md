@@ -6,7 +6,7 @@ GTK frontend for pass
 
  - [x] Use [passpy](https://passpy.readthedocs.io/en/latest/) as the backend
  - [x] Listing passwords
- - [ ] Viewing password entries
+ - [x] Viewing password entries
  - [ ] Editing existing password entries
  - [ ] Adding new passwords
  - [ ] Search
