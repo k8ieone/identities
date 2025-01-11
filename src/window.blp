@@ -5,7 +5,7 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
   title: "Identities";
   default-height: 450;
   default-width: 800;
-  Adw.Breakpoint {
+  Adw.Breakpoint brkpoint {
     condition ("max-width: 550sp")
     setters {
       splitview.collapsed: true;
@@ -15,8 +15,6 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
 }
 
 Adw.NavigationSplitView splitview {
-  //collapsed: false;
-  //show-content: false;
   sidebar: password_browser;
   content: password_viewer_navigation;
 }
