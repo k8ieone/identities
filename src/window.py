@@ -33,7 +33,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     clipboard = Gdk.Display.get_default().get_clipboard()
 
-    toolbarview = Gtk.Template.Child()
     splitview = Gtk.Template.Child()
     password_page = Gtk.Template.Child()
     password_group = Gtk.Template.Child()
@@ -48,7 +47,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         print(self.settings.get_strv("stores"))
         if len(self.settings.get_strv("stores")) > 0:
             print("Skipping welcome page...")
-            self.toolbarview.set_content(self.splitview)
+            self.set_content(self.splitview)
         self.bind_actions()
         self.store = passpy.store.Store(gpg_bin="gpg")
         page = self.build_navigation_page(self.cur_dir)
@@ -61,7 +60,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         if (Path.home() / ".password-store").is_dir():
             print("Default password store detected")
             self.settings.set_strv("stores", ["~/.password-store"])
-            self.toolbarview.set_content(self.splitview)
+            self.set_content(self.splitview)
 
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
@@ -128,11 +127,11 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Creates a new Adw.NavigationPage for the password browser for a given directory."""
         pp = self.password_store_dir / directory
         bar = Adw.HeaderBar()
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        scrolledwindow = Gtk.ScrolledWindow(child=self.build_list_box(directory))
+        toolbarview = Adw.ToolbarView(content=scrolledwindow)
+        toolbarview.add_top_bar(bar)
         #print("Build page: {}".format(directory))
-        page = Adw.NavigationPage(tag=str(pp.absolute()), child=box)
-        box.append(bar)
-        box.append(self.build_list_box(directory))
+        page = Adw.NavigationPage(tag=str(pp.absolute()), child=toolbarview)
         return page
 
     def generate_passwords_list(self):
