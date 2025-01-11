@@ -7,9 +7,11 @@
     "finish-args" : [
         "--share=network",
         "--share=ipc",
-        "--filesystem=home",
+        "--filesystem=~/.password-store",
+        "--filesystem=~/.gnupg",
         "--socket=fallback-x11",
-        "--socket=gpg-agent",
+        "--talk-name=org.freedesktop.secrets",
+        "--talk-name=org.gnome.keyring.SystemPrompter",
         "--device=dri",
         "--socket=wayland"
     ],
