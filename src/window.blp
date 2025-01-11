@@ -17,8 +17,8 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
 Adw.NavigationSplitView splitview {
   //collapsed: false;
   //show-content: false;
-  sidebar: password_navigation;
-  content: empty_password;
+  sidebar: password_browser;
+  content: password_viewer_navigation;
 }
 
 Adw.ToolbarView welcome {
@@ -52,69 +52,36 @@ Adw.ToolbarView welcome {
 
 
 // Navigation pages for split-view content
-Adw.NavigationPage empty_password {
-  title: "Select a password";
-  child: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      show-title: false;
-      [end]
-      Gtk.MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Menu");
-        menu-model: primary_menu;
-      }
-    }
-    content: Adw.StatusPage {
-      title: "No password selected";
-      description: "Select a password entry to edit";
-    };
-  };
-}
-
-Adw.NavigationPage password_page {
-  title: "Viewing a password entry";
-  child: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      show-title: false;
-      [end]
-      Gtk.MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Menu");
-        menu-model: primary_menu;
-      }
-    }
-    content: Adw.StatusPage {
-      child: Adw.Clamp {
-        maximum-size: 450;
-        child: Gtk.Box {
-          orientation: vertical;
-          spacing: 20;
-          // Built in code - see window.on_password_action()
-          Adw.PreferencesGroup password_group {
+Adw.NavigationPage password_viewer_navigation {
+  child: Adw.NavigationView viewer_nav_view {
+    Adw.NavigationPage {
+      title: "Select a password";
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          show-title: false;
+          [end]
+          Gtk.MenuButton {
+            primary: true;
+            icon-name: "open-menu-symbolic";
+            tooltip-text: _("Menu");
+            menu-model: primary_menu;
           }
-          Adw.Clamp {
-            maximum-size: 300;
-            child: Gtk.Button {
-              styles ["suggested-action", "pill"]
-              label: "Edit";
-              action-name: "win.edit";
-            };
-          }
+        }
+        content: Adw.StatusPage {
+          title: "No password selected";
+          description: "Select a password entry to edit";
         };
       };
-    };
+    }
   };
 }
 
 
 // Navigation pages for split-view sidebar
 // Mostly built in code - see window.build_navigation_page()
-Adw.NavigationPage password_navigation {
-  child: Adw.NavigationView nav_view {
+Adw.NavigationPage password_browser {
+  child: Adw.NavigationView browser_nav_view {
   };
 }
 
