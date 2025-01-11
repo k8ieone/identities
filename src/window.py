@@ -34,9 +34,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     clipboard = Gdk.Display.get_default().get_clipboard()
 
     splitview = Gtk.Template.Child()
-    password_page = Gtk.Template.Child()
-    password_group = Gtk.Template.Child()
-    nav_view = Gtk.Template.Child()
+    browser_nav_view = Gtk.Template.Child()
+    viewer_nav_view = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -51,7 +50,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.bind_actions()
         self.store = passpy.store.Store(gpg_bin="gpg")
         page = self.build_navigation_page(self.cur_dir)
-        self.nav_view.add(page)
+        self.browser_nav_view.add(page)
         self.generate_passwords_list()
         self.password_group_children = []
 
@@ -65,21 +64,29 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
         print("Entering directory {}".format("{}".format(_.unpack())))
-        self.nav_view.push_by_tag(_.unpack())
+        self.browser_nav_view.push_by_tag(_.unpack())
         self.cur_dir = Path(_.unpack())
         self.generate_passwords_list()
 
     def on_password_action(self, widget, _):
         """Callback for the win.password action."""
-        for child in self.password_group_children:
-            self.password_group.remove(child)
-        self.password_group_children = []
         pwd_path = Path(_.unpack())
+        print("Showing password {}".format(str(pwd_path)))
+        #self.tst.set_child(self.build_password_group(pwd_path))
+        self.viewer_nav_view.push(self.build_viewer_page(pwd_path))
+        #self.splitview.set_content(self.password_page)
+
+    def on_copy_action(self, widget, _):
+        """Callback for the win.password action."""
+        print("Copying to clipboard")
+        self.clipboard.set(_.unpack())
+
+    def build_password_group(self, pwd_path):
         rel_path = pwd_path.relative_to(self.password_store_dir)
-        print("Showing password {}".format(str(rel_path)))
         content = self.store.get_key(str(rel_path).removesuffix(".gpg"))
-        self.password_group.set_title(rel_path.stem)
-        self.password_group.set_description(str(rel_path))
+        password_group = Adw.PreferencesGroup()
+        password_group.set_title(rel_path.stem)
+        password_group.set_description(str(rel_path))
         for index, line in enumerate(content.splitlines()):
             row = Adw.ActionRow()
             title = line
@@ -95,16 +102,26 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             copy_button = Gtk.Button(icon_name="edit-copy-symbolic", has_frame=False, valign=Gtk.Align(3), action_name="win.copy")
             copy_button.set_action_target_value(GLib.Variant("s", title))
             row.add_suffix(copy_button)
-            self.password_group_children.append(row)
-            self.password_group.add(row)
-        self.splitview.set_content(self.password_page)
+            password_group.add(row)
+        return password_group
 
-    def on_copy_action(self, widget, _):
-        """Callback for the win.password action."""
-        print("Copying to clipboard")
-        self.clipboard.set(_.unpack())
+    def build_viewer_page(self, path):
+        """Creates a new password viewer Adw.NavigationPage for a given entry."""
+        pp = self.password_store_dir / path
+        bar = Adw.HeaderBar()
+        button = Gtk.Button(css_classes=["suggested-action", "pill"], label="Edit", action_name="win.edit")
+        box = Gtk.Box(orientation=Gtk.Orientation(1), spacing=20)
+        box.append(self.build_password_group(pp))
+        box.append(button)
+        clamp = Adw.Clamp(maximum_size=450, child=box)
+        status = Adw.StatusPage(child=clamp)
+        toolbarview = Adw.ToolbarView(content=status)
+        toolbarview.add_top_bar(bar)
+        #print("Build page: {}".format(path))
+        page = Adw.NavigationPage(title=path.stem, child=toolbarview)
+        return page
 
-    def build_list_box(self, directory):
+    def build_passwords_list_box(self, directory):
         """Creates a new list box populated with buttons for a given directory."""
         box = Gtk.ListBox()
         pp = self.password_store_dir / directory
@@ -123,15 +140,15 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             box.append(button)
         return box
 
-    def build_navigation_page(self, directory):
-        """Creates a new Adw.NavigationPage for the password browser for a given directory."""
-        pp = self.password_store_dir / directory
+    def build_navigation_page(self, path):
+        """Creates a new password browser Adw.NavigationPage for a given directory."""
+        pp = self.password_store_dir / path
         bar = Adw.HeaderBar()
-        scrolledwindow = Gtk.ScrolledWindow(child=self.build_list_box(directory))
+        scrolledwindow = Gtk.ScrolledWindow(child=self.build_passwords_list_box(pp))
         toolbarview = Adw.ToolbarView(content=scrolledwindow)
         toolbarview.add_top_bar(bar)
-        #print("Build page: {}".format(directory))
-        page = Adw.NavigationPage(tag=str(pp.absolute()), child=toolbarview)
+        #print("Build page: {}".format(path))
+        page = Adw.NavigationPage(title=pp.stem, tag=str(pp.absolute()), child=toolbarview)
         return page
 
     def generate_passwords_list(self):
@@ -142,9 +159,9 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         for entry in dirs:
             p = Path(entry)
             pp = self.password_store_dir / p
-            if self.nav_view.find_page(str(pp.absolute())) is None:
+            if self.browser_nav_view.find_page(str(pp.absolute())) is None:
                 page = self.build_navigation_page(p)
-                self.nav_view.add(page)
+                self.browser_nav_view.add(page)
 
     def bind_actions(self):
         actions = {
