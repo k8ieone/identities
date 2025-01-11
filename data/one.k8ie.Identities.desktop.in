@@ -8,3 +8,4 @@ Categories=Utility;
 Keywords=password;logins;
 Comment=smt
 StartupNotify=true
+X-Purism-FormFactor=Workstation;Mobile;
