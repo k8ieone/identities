@@ -175,7 +175,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         password_group.set_description(str(rel_path))
         otp_rows = []
         for index, line in enumerate(content.splitlines()):
-            row = Adw.PasswordEntryRow(title_selectable=False, selectable=False)
+            row = Adw.PasswordEntryRow()
             text = line
             title = None
             otp = False
