@@ -28,6 +28,7 @@
     ],
     "modules" : [
         "passpy.json",
+        "pyotp.json",
         {
             "name": "blueprint-compiler",
             "buildsystem": "meson",
