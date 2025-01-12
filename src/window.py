@@ -100,6 +100,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     def on_copy_action(self, widget, _):
         """Callback for the win.password action."""
         print("Copying to clipboard")
+        self.toast_overlay.add_toast(Adw.Toast(title="Entry copied to clipboard!"))
         self.clipboard.set(_.unpack())
 
     def build_password_group(self, pwd_path):
@@ -136,7 +137,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         box.append(button)
         clamp = Adw.Clamp(maximum_size=450, child=box)
         status = Adw.StatusPage(child=clamp)
-        toolbarview = Adw.ToolbarView(content=status)
+        self.toast_overlay = Adw.ToastOverlay(child=status)
+        toolbarview = Adw.ToolbarView(content=self.toast_overlay)
         toolbarview.add_top_bar(bar)
         #print("Build page: {}".format(path))
         page = Adw.NavigationPage(title=path.stem, child=toolbarview)
