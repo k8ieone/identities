@@ -110,19 +110,35 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         password_group.set_title(rel_path.stem)
         password_group.set_description(str(rel_path))
         for index, line in enumerate(content.splitlines()):
-            row = Adw.ActionRow()
-            title = line
-            subtitle = None
+            row = Adw.PasswordEntryRow()
+            text = line
+            title = None
             if index == 0:
-                subtitle = "Password"
+                title = "Password"
             elif ": " in line:
-                subtitle = line.split(": ")[0]
-                title = line.removeprefix(subtitle + ": ")
-            row.set_title(title)
-            if subtitle is not None:
-                row.set_subtitle(subtitle)
+                title = line.split(": ")[0]
+                text = line.removeprefix(title + ": ")
+            row.set_editable(False)
+            row.set_text(text)
+            if title is not None:
+                row.set_title(title)
+            # Workaround to hide the edit button
+            box1 = row.get_first_child()
+            if box1 and isinstance(box1, Gtk.Box):
+                # Traverse all children of box1 to find the target widget
+                child = box1.get_first_child()
+                while child:
+                    # Check if the child contains the expected structure
+                    # Look for a widget that contains a Gtk.Image as its last child
+                    if isinstance(child, Gtk.Widget):
+                        last_child = child.get_last_child()
+                        if last_child and isinstance(last_child, Gtk.Image):
+                            # Hide the Gtk.Image (edit button)
+                            last_child.set_visible(False)
+                            break
+                    child = child.get_next_sibling()
             copy_button = Gtk.Button(icon_name="edit-copy-symbolic", has_frame=False, valign=Gtk.Align(3), action_name="win.copy")
-            copy_button.set_action_target_value(GLib.Variant("s", title))
+            copy_button.set_action_target_value(GLib.Variant("s", text))
             row.add_suffix(copy_button)
             password_group.add(row)
         return password_group
@@ -207,6 +223,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         }
         for action in actions:
             act = Gio.SimpleAction.new(action, actions[action]["ret"])
-            print("Connecting {} to {}".format(action, actions[action]["method"]))
+            #print("Connecting {} to {}".format(action, actions[action]["method"]))
             act.connect("activate", actions[action]["method"])
             self.add_action(act)
