@@ -123,10 +123,10 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             if title is not None:
                 row.set_title(title)
             # Workaround to hide the edit button
-            box1 = row.get_first_child()
-            if box1 and isinstance(box1, Gtk.Box):
-                # Traverse all children of box1 to find the target widget
-                child = box1.get_first_child()
+            box = row.get_first_child()
+            if box and isinstance(box, Gtk.Box):
+                # Traverse all children of box to find the target widget
+                child = box.get_first_child()
                 while child:
                     # Check if the child contains the expected structure
                     # Look for a widget that contains a Gtk.Image as its last child
