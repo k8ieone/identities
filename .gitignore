@@ -1,1 +1,4 @@
 /subprojects/blueprint-compiler
+repo
+build
+.flatpak-builder
