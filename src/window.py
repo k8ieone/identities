@@ -100,7 +100,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     def on_copy_action(self, widget, _):
         """Callback for the win.password action."""
         print("Copying to clipboard")
-        self.toast_overlay.add_toast(Adw.Toast(title="Entry copied to clipboard!"))
+        self.toast_overlay.add_toast(Adw.Toast(title="Entry copied to clipboard!", timeout=2))
         self.clipboard.set(_.unpack())
 
     def build_password_group(self, pwd_path):
