@@ -9,7 +9,7 @@ jobs:
     name: "Flatpak"
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-47
+      image: bilelmoussaoui/flatpak-github-actions:gnome-47
       options: --privileged
     strategy:
       matrix:
