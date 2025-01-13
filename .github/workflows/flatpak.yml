@@ -1,6 +1,9 @@
 on:
   push:
-    branches: [the-chosen-one]
+    paths:
+      - one.k8ie.Identities.json
+      - src/**
+      - data/**
   pull_request:
   workflow_dispatch:
 name: Flatpak - dev
