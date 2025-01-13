@@ -2,6 +2,7 @@ on:
   push:
     branches: [the-chosen-one]
   pull_request:
+  workflow_dispatch:
 name: Flatpak - dev
 jobs:
   flatpak:
