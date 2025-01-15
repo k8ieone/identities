@@ -36,6 +36,14 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     clipboard = Gdk.Display.get_default().get_clipboard()
 
+    setup_wizard = Gtk.Template.Child()
+    store_setup = Gtk.Template.Child()
+
+    options_dialog = Gtk.Template.Child()
+    store_selection = Gtk.Template.Child()
+
+    stores_editor_clamp = Gtk.Template.Child()
+
     splitview = Gtk.Template.Child()
     browser_nav_view = Gtk.Template.Child()
     viewer_nav_view = Gtk.Template.Child()
@@ -48,13 +56,11 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.password_store_dir = Path.home() / Path(".password-store")
         self.cur_dir = Path(".")
         self.cur_viewer_page = None
-        print(self.settings.get_strv("stores"))
         if len(self.settings.get_strv("stores")) > 0:
             print("Skipping welcome page...")
             self.set_content(self.splitview)
             self.brkpoint.connect("apply", self.on_collapse)
             self.brkpoint.connect("unapply", self.on_uncollapse)
-            #self.viewer_nav_view.connect("popped", self.page_hidden)
         self.bind_actions()
         self.store = passpy.store.Store(gpg_bin="gpg")
         page = self.build_navigation_page(self.cur_dir)
@@ -67,7 +73,29 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         if (Path.home() / ".password-store").is_dir():
             print("Default password store detected")
             self.settings.set_strv("stores", ["~/.password-store"])
-            self.set_content(self.splitview)
+            self.setup_wizard.push(self.store_setup)
+
+    def on_open_settings(self, widget, _):
+        self.build_stores(self.stores_editor_clamp, True)
+        self.options_dialog.present(parent=self)
+        #d = Gtk.FileDialog()
+        #d.open(self, None, None, None)
+
+    def on_settings_done(self, widget, _):
+        print("TODO: Check if at least one store was configured")
+        self.setup_wizard.push(self.store_selection)
+
+    def build_stores(self, parent, editable):
+        if editable:
+            add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic", action_name="win.add_store")
+            group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
+            box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
+            box.append(group)
+            for store in self.settings.get_strv("stores"):
+                row = Adw.ActionRow(activatable=True, title=Path(store).stem, subtitle=store)
+                row.add_suffix(Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3)))
+                group.add(row)
+            parent.set_child(box)
 
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
@@ -308,6 +336,14 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             "copy": {
                 "method": self.on_copy_action,
                 "ret": GLib.VariantType.new("s")
+            },
+            "open_settings": {
+                "method": self.on_open_settings,
+                "ret": None
+            },
+            "settings_done": {
+                "method": self.on_settings_done,
+                "ret": None
             }
         }
         for action in actions:
