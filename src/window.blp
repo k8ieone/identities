@@ -97,7 +97,15 @@ Adw.NavigationPage store_selection {
         menu-model: primary_menu;
       }
     }
-    //content:
+    content: Gtk.ScrolledWindow {
+      child: Adw.StatusPage {
+        title: "Select your password store";
+        Adw.Clamp stores_selector_clamp {
+          maximum-size: 320;
+          // Built in code - see window.build_stores
+        }
+      };
+    };
   };
 }
 
@@ -109,32 +117,11 @@ Adw.PreferencesDialog options_dialog {
     Adw.HeaderBar {
     }
     content: Gtk.ScrolledWindow {
-      child: Adw.PreferencesPage stores {
-        title: "Select your password store";
+      child: Adw.PreferencesPage {
+        title: "Configure your password stores";
         Adw.Clamp stores_editor_clamp {
           maximum-size: 280;
-          // child: Gtk.Box {
-          //   spacing: 20;
-          //   orientation: vertical;
-            // Adw.PreferencesGroup {
-            //   title: "Stores";
-            //   header-suffix: Gtk.Button {
-            //     styles ["flat"]
-            //     icon-name: "list-add-symbolic";
-            //     action-name: "win.add_store";
-            //   };
-            //   Adw.ActionRow smt {
-            //     activatable: true;
-            //     title: ".password-store";
-            //     subtitle: "~/.password-store";
-            //   }
-            // }
-            // Adw.PreferencesGroup {
-            //   Adw.ButtonRow {
-            //     title: "Manage password stores";
-            //   }
-            // }
-          //};
+          // Built in code - see window.build_stores
         }
       };
     };
@@ -182,7 +169,7 @@ menu primary_menu {
   section {
     item {
       label: _("_Preferences");
-      action: "app.preferences";
+      action: "win.open_settings";
     }
 
     item {
