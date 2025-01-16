@@ -166,6 +166,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
+        # Debug - to be removed
         print("Entering directory {}".format("{}".format(_.unpack())))
         self.browser_nav_view.push_by_tag(_.unpack())
         self.cur_dir = Path(_.unpack())
@@ -174,35 +175,37 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     def on_password_action(self, widget, _):
         """Callback for the win.password action."""
         pwd_path = Path(_.unpack())
+        # Debug - to be removed
         print("Showing password {}".format(str(pwd_path)))
-        #self.tst.set_child(self.build_password_group(pwd_path))
         self.cur_viewer_page = self.build_viewer_page(pwd_path)
         if self.splitview.get_collapsed():
             self.browser_nav_view.push(self.cur_viewer_page)
         else:
             self.viewer_nav_view.push(self.cur_viewer_page)
-        #self.splitview.push(self.password_page)
-        #self.splitview.set_content(self.password_page)
 
     def on_collapse(self, widget):
+        """Called when the split-navigation view is collapsed"""
         if self.cur_viewer_page is not None:
             self.viewer_nav_view.pop()
             self.browser_nav_view.push(self.cur_viewer_page)
+        # Debug - to be removed
         print("Collapsed")
 
     def on_uncollapse(self, widget):
+        """Called when the split-navigation view is uncollapsed"""
         if self.cur_viewer_page is not None:
             self.browser_nav_view.pop()
             self.viewer_nav_view.push(self.cur_viewer_page)
+        # Debug - to be removed
         print("Uncollapsed")
 
     def on_copy_action(self, widget, _):
-        """Callback for the win.password action."""
-        print("Copying to clipboard")
+        """Callback for the win.copy action."""
         self.toast_overlay.add_toast(Adw.Toast(title="Entry copied to clipboard!", timeout=2))
         self.clipboard.set(_.unpack())
 
     def map_value(self, value, from_min, from_max, to_min, to_max):
+        """Helper function - remaps a value from one range to another"""
         return to_min + (value - from_min) * (to_max - to_min) / (from_max - from_min)
 
     def monitor_otp(self, row):
@@ -337,6 +340,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.toast_overlay = Adw.ToastOverlay(child=status)
         toolbarview = Adw.ToolbarView(content=self.toast_overlay)
         toolbarview.add_top_bar(bar)
+        # Debug - to be removed
         #print("Build page: {}".format(path))
         page = Adw.NavigationPage(title=path.stem, child=toolbarview)
         page.connect("hidden", self.password_page_hidden)
@@ -351,12 +355,14 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         dirs = sorted([x for x in pp.iterdir() if x.is_dir() and not x.name.startswith('.')], key=str)
         pwds = sorted([x for x in pp.iterdir() if x.is_file() and not x.name.startswith('.')], key=str)
         for entry in dirs:
+            # Debug - to be removed
             #print("Add button: {}".format(entry))
             #button = Adw.ButtonRow(action_name="navigation.push", action_target=GLib.Variant("s", str(entry)), title=str(entry.parts[-1]))
             button = Adw.ButtonRow(action_name="win.directory", title=str(entry.parts[-1]), end_icon_name="go-next-symbolic")
             button.set_action_target_value(GLib.Variant("s", str(entry)))
             box.append(button)
         for entry in pwds:
+            # Debug - to be removed
             #print("Add button: {}".format(entry))
             button = Adw.ButtonRow(action_name="win.password", title=str(entry.stem))
             button.set_action_target_value(GLib.Variant("s", str(entry)))
@@ -415,6 +421,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         }
         for action in actions:
             act = Gio.SimpleAction.new(action, actions[action]["ret"])
+            # Debug - to be removed
             #print("Connecting {} to {}".format(action, actions[action]["method"]))
             act.connect("activate", actions[action]["method"])
             self.add_action(act)
