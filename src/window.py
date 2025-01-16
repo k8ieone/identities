@@ -67,8 +67,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def on_start_action(self, widget, _):
         """Callback for the win.start action."""
-        if (Path.home() / ".password-store").is_dir():
-            self.setup_wizard.push(self.store_setup)
+        self.setup_wizard.push(self.store_setup)
 
     def on_open_settings(self, widget, nothing=_):
         self.build_stores(self.stores_editor_clamp, True)
