@@ -11,7 +11,7 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
       splitview.collapsed: true;
     }
   }
-  content: welcome;
+  content: setup_wizard;
 }
 
 Adw.NavigationSplitView splitview {
@@ -19,30 +19,110 @@ Adw.NavigationSplitView splitview {
   content: password_viewer_navigation;
 }
 
-Adw.ToolbarView welcome {
-  [top]
-  Adw.HeaderBar {
-    show-title: false;
-    [end]
-    Gtk.MenuButton {
-      primary: true;
-      icon-name: "open-menu-symbolic";
-      tooltip-text: _("Menu");
-      menu-model: primary_menu;
-    }
+Adw.NavigationView setup_wizard {
+  Adw.NavigationPage {
+    child: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        show-title: false;
+        [end]
+        Gtk.MenuButton {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: _("Menu");
+          menu-model: primary_menu;
+        }
+      }
+      content: Adw.StatusPage {
+        title: "Welcome to Identities";
+        description: "The standard unix password manager for GNOME";
+        child: Adw.Clamp {
+          maximum-size: 250;
+          child: Gtk.Button start {
+            styles ["suggested-action", "pill"]
+            label: "Let's get started!";
+            action-name: "win.start";
+          };
+        };
+      };
+    };
   }
-  content: Adw.StatusPage {
-    title: "Welcome to Identities!";
-    description: "The standard unix password manager for GNOME";
-    child: Adw.Clamp {
-      maximum-size: 250;
-      child: Gtk.Button start {
-        styles ["suggested-action", "pill"]
-        label: "Let's get started!";
-        action-name: "win.start";
-        //child: Adw.ButtonContent {
-        //  label: "Let's get started";
-        //};
+  Adw.NavigationPage store_setup {
+    child: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        show-title: false;
+        [end]
+        Gtk.MenuButton {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: _("Menu");
+          menu-model: primary_menu;
+        }
+      }
+      content: Adw.StatusPage {
+        title: "Setup your password stores";
+        description: "Press the button below to configure your stores";
+        child: Adw.Clamp {
+          maximum-size: 250;
+          child: Gtk.Box {
+            orientation: vertical;
+            Gtk.Button open_settings {
+              styles ["suggested-action", "pill"]
+              label: "Open settings";
+              action-name: "win.open_settings";
+            }
+            Gtk.Button settings_done {
+              styles ["pill"]
+              label: "All set!";
+              action-name: "win.settings_done";
+            }
+          };
+        };
+      };
+    };
+  }
+}
+
+Adw.NavigationPage store_selection {
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+      [end]
+      Gtk.MenuButton {
+        primary: true;
+        icon-name: "open-menu-symbolic";
+        tooltip-text: _("Menu");
+        menu-model: primary_menu;
+      }
+    }
+    content: Gtk.ScrolledWindow {
+      child: Adw.StatusPage {
+        title: "Select your password store";
+        Adw.Clamp stores_selector_clamp {
+          maximum-size: 320;
+          // Built in code - see window.build_stores
+        }
+      };
+    };
+  };
+}
+
+Adw.PreferencesDialog options_dialog {
+  content-height: 300;
+  content-width: 300;
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+    }
+    content: Gtk.ScrolledWindow {
+      child: Adw.PreferencesPage {
+        title: "Configure your password stores";
+        Adw.Clamp stores_editor_clamp {
+          maximum-size: 280;
+          // Built in code - see window.build_stores
+        }
       };
     };
   };
@@ -89,7 +169,7 @@ menu primary_menu {
   section {
     item {
       label: _("_Preferences");
-      action: "app.preferences";
+      action: "win.open_settings";
     }
 
     item {
