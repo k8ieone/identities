@@ -78,8 +78,9 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             self.build_stores(self.stores_selector_clamp, False)
             self.setup_wizard.push(self.store_selection)
         else:
-            print("No stores configured!!!")
-            print("TODO: Dialog for this")
+            dialog = Adw.AlertDialog(heading="No stores configured", body="You must first configure at least one password store in the settings.")
+            dialog.add_response(id="ok", label="Okay, I'll add one")
+            dialog.present(parent=self)
 
     def on_store_selected(self, widget):
         self.store_selection_done(widget.get_subtitle())
