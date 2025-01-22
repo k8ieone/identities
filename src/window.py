@@ -96,7 +96,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.brkpoint.connect("apply", self.on_collapse)
         self.brkpoint.connect("unapply", self.on_uncollapse)
 
-    def on_row_removal(self, widget):
+    def on_settings_row_removal(self, widget):
         # Gets the parent action row
         row = widget.get_parent().get_parent().get_parent()
         removed_store = row.get_subtitle()
@@ -112,7 +112,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.build_stores(self.stores_editor_clamp, True)
         self.build_stores(self.stores_selector_clamp, False)
 
-    def on_row_add(self, widget):
+    def on_settings_row_add(self, widget):
         """Thanks, ChatGPT 💀"""
         def on_response(dialog, result, _):
             try:
@@ -138,7 +138,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
         if editable:
             add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic")
-            add_button.connect("clicked", self.on_row_add)
+            add_button.connect("clicked", self.on_settings_row_add)
             group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
             box.append(group)
         else:
@@ -153,7 +153,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             row = Adw.ActionRow(title=Path(store).stem, subtitle=store)
             if editable:
                 remove_button = Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3))
-                remove_button.connect("clicked", self.on_row_removal)
+                remove_button.connect("clicked", self.on_settings_row_removal)
                 row.add_suffix(remove_button)
                 row.set_activatable(False)
             else:
