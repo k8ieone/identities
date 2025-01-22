@@ -141,13 +141,6 @@ Adw.NavigationPage password_viewer_navigation {
         [top]
         Adw.HeaderBar {
           show-title: false;
-          [end]
-          Gtk.MenuButton {
-            primary: true;
-            icon-name: "open-menu-symbolic";
-            tooltip-text: _("Menu");
-            menu-model: primary_menu;
-          }
         }
         content: Adw.StatusPage {
           title: "No password selected";

@@ -35,6 +35,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'IdentitiesWindow'
 
     clipboard = Gdk.Display.get_default().get_clipboard()
+    primary_menu = Gtk.Template.Child()
 
     setup_wizard = Gtk.Template.Child()
     store_setup = Gtk.Template.Child()
@@ -132,6 +133,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
                 self.build_stores(self.stores_selector_clamp, False)
 
         dialog = Gtk.FileDialog()
+        dialog.set_title("Select your password store directory")
         dialog.select_folder(self, None, on_response, None)
 
     def build_stores(self, parent, editable):
@@ -373,6 +375,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Creates a new password browser Adw.NavigationPage for a given directory."""
         pp = self.password_store_dir / path
         bar = Adw.HeaderBar()
+        bar.pack_end(Gtk.MenuButton(primary=True, icon_name="open-menu-symbolic", menu_model=self.primary_menu))
         scrolledwindow = Gtk.ScrolledWindow(child=self.build_passwords_list_box(pp))
         toolbarview = Adw.ToolbarView(content=scrolledwindow)
         toolbarview.add_top_bar(bar)
