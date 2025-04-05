@@ -32,7 +32,7 @@ configure_file(
   configuration: conf,
   install: true,
   install_dir: get_option('bindir'),
-  install_mode: 'r-xr-xr--'
+  install_mode: 'r-xr-xr-x'
 )
 
 identities_sources = [
