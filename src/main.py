@@ -57,6 +57,7 @@ class IdentitiesApplication(Adw.Application):
                                 developers=['Kateřina Medvědová https://github.com/k8ieone'],
                                 copyright='© 2025 Kateřina Medvědová',
                                 license_type=Gtk.License(3),
+                                website='https://github.com/k8ieone/identities',
                                 issue_url='https://github.com/k8ieone/identities/issues')
         about.add_credit_section("Inspiration", [
                                  "Caerbannog https://git.sr.ht/~craftyguy/caerbannog",
