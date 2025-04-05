@@ -12,7 +12,6 @@ Install it using `flatpak install identities.flatpak`.
 
 ## Features
 
- - Uses [passpy](https://passpy.readthedocs.io/en/latest/) as the backend
  - Viewing password entries
  - Supports as many arbitrary attributes as you want
  - Support for generating OTPs (even multiple per file)
