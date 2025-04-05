@@ -221,7 +221,13 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             row = self.otp_rows[task_data]
             expires_in = row.otp.interval - datetime.datetime.now().timestamp() % row.otp.interval
             remapped = self.map_value(expires_in, 0, row.otp.interval, 0.0, 1.0)
-            row.bar.set_fraction(remapped)
+            animating_to = self.map_value(expires_in - 1, 0, row.otp.interval, 0.0, 1.0)
+            if animating_to < 0:
+                animating_to = 0
+            animating_from = self.map_value(expires_in, 0, row.otp.interval, 0.0, 1.0)
+            row.progressbar_animation.set_value_to(animating_to)
+            row.progressbar_animation.set_value_from(animating_from)
+            row.progressbar_animation.play()
             row.set_text(row.otp.now())
             new_task = self.create_new_task(self.otp_generated, row, id(row))
             row.otp_task = new_task
@@ -263,7 +269,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         otp_widgets = page.otp_rows
         for widget in otp_widgets:
             # Debug - to be removed
-            print("Cancelling task")
+            print("CANCELLING TASK")
             widget.otp_task.get_cancellable().cancel()
             del self.otp_rows[id(widget)]
 
@@ -284,13 +290,18 @@ class IdentitiesWindow(Adw.ApplicationWindow):
                 otp = True
                 bar = Gtk.ProgressBar(inverted=False)
                 row.otp = pyotp.parse_uri(text)
+                fraction_target = Adw.PropertyAnimationTarget.new(bar, "fraction")
                 expires_in = row.otp.interval - datetime.datetime.now().timestamp() % row.otp.interval
+                progressbar_animation = Adw.TimedAnimation.new(bar, 0, 1, 1 * 1000, fraction_target)
+                progressbar_animation.set_easing(0)
                 bar.set_fraction(self.map_value(expires_in, 0, row.otp.interval, 0.0, 1.0))
                 text = row.otp.now()
                 otp_rows.append(row)
                 self.otp_rows[id(row)] = row
                 row.otp_task = self.create_new_task(self.otp_generated, row, id(row))
                 row.bar = bar
+                row.fraction_target = fraction_target
+                row.progressbar_animation = progressbar_animation
             elif index == 0:
                 title = "Password"
             elif ": " in line:
