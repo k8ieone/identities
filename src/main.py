@@ -52,10 +52,19 @@ class IdentitiesApplication(Adw.Application):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(application_name='Identities',
                                 application_icon='one.k8ie.Identities',
-                                developer_name='Kate',
+                                developer_name='Kateřina Medvědová',
                                 version='0.1.0',
-                                developers=['Kate'],
-                                copyright='© 2025 Kate')
+                                developers=['Kateřina Medvědová https://github.com/k8ieone'],
+                                copyright='© 2025 Kateřina Medvědová',
+                                license_type=Gtk.License(3),
+                                issue_url='https://github.com/k8ieone/identities/issues')
+        about.add_credit_section("Inspiration", [
+                                 "Caerbannog https://git.sr.ht/~craftyguy/caerbannog",
+                                 "passpy https://github.com/bfrascher/passpy"
+                                 ])
+        about.add_credit_section("Used libraries", [
+                                 "pyotp https://github.com/pyauth/pyotp",
+                                 ])
         about.present(parent=self.props.active_window)
 
     def on_preferences_action(self, widget, _):
