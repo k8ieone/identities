@@ -24,7 +24,7 @@ from gi.repository import GLib
 from gi.repository import Gdk
 
 from pathlib import Path
-import passpy
+from .passutils import Store
 import pyotp
 import datetime
 import math
@@ -87,10 +87,10 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.store_selection_done(widget.get_subtitle())
 
     def store_selection_done(self, store):
-        self.cur_dir = Path(".")
+        self.cur_dir = Path(store)
         self.cur_viewer_page = None
         self.password_store_dir = Path(store)
-        self.store = passpy.store.Store(gpg_bin="gpg", store_dir=store)
+        self.store = Store(store_dir=self.password_store_dir)
         page = self.build_navigation_page(self.cur_dir)
         self.browser_nav_view.add(page)
         self.generate_passwords_list()
@@ -269,7 +269,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def build_password_group(self, pwd_path):
         rel_path = pwd_path.relative_to(self.password_store_dir)
-        content = self.store.get_key(str(rel_path).removesuffix(".gpg"))
+        content = self.store.get_key(pwd_path)
         password_group = Adw.PreferencesGroup(separate_rows=False)
         password_group.set_title(rel_path.stem)
         password_group.set_description(str(rel_path))
@@ -389,10 +389,9 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         dirs = dir_list[0]
         pwds = dir_list[1]
         for entry in dirs:
-            p = Path(entry)
-            pp = self.password_store_dir / p
+            pp = self.password_store_dir / entry
             if self.browser_nav_view.find_page(str(pp.absolute())) is None:
-                page = self.build_navigation_page(p)
+                page = self.build_navigation_page(entry)
                 self.browser_nav_view.add(page)
 
     def bind_actions(self):
