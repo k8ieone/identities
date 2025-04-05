@@ -34,6 +34,11 @@ Available on the AUR! Install using you favorite [AUR helper](https://wiki.archl
 
 Work in progress.
 
+### Your distro!
+
+Maintaining packages can be a challenge, so I truly appreciate any help! If you'd like to package Identities for your distribution, I'd love to have you involved.  
+Feel free to open an issue / PR if you'd like to have your package listed here!
+
 ## Roadmap
 
 See [issues](https://github.com/k8ieone/identities/issues) for more currently planned features.
