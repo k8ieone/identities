@@ -39,6 +39,7 @@ identities_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'passutils.py'
 ]
 
 install_data(identities_sources, install_dir: moduledir)
