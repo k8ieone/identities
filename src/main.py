@@ -53,7 +53,7 @@ class IdentitiesApplication(Adw.Application):
         about = Adw.AboutDialog(application_name='Identities',
                                 application_icon='one.k8ie.Identities',
                                 developer_name='Kateřina Medvědová',
-                                version='0.1.0',
+                                version='0.1.1',
                                 developers=['Kateřina Medvědová https://github.com/k8ieone'],
                                 copyright='© 2025 Kateřina Medvědová',
                                 license_type=Gtk.License(3),
