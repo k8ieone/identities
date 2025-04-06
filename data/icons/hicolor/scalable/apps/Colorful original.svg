@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.1 (93de688d07, 2025-03-30)"
-   sodipodi:docname="one.k8ie.Identities.svg"
+   sodipodi:docname="Identities_1.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -24,37 +24,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="2.358864"
-     inkscape:cx="302.47611"
-     inkscape:cy="250.96826"
+     inkscape:zoom="1.179432"
+     inkscape:cx="246.305"
+     inkscape:cy="273.86063"
      inkscape:window-width="1920"
-     inkscape:window-height="1131"
+     inkscape:window-height="1043"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs1">
-    <linearGradient
-       id="linearGradient1"
-       inkscape:collect="always">
-      <stop
-         style="stop-color:#99c1f1;stop-opacity:1;"
-         offset="0"
-         id="stop1" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0.20775984"
-         id="stop5" />
-      <stop
-         style="stop-color:#d0a5d0;stop-opacity:1;"
-         offset="0.55665898"
-         id="stop6" />
-      <stop
-         style="stop-color:#7da3ce;stop-opacity:1;"
-         offset="0.89549249"
-         id="stop2" />
-    </linearGradient>
     <linearGradient
        id="linearGradient1740"
        inkscape:collect="always">
@@ -99,6 +79,76 @@
          offset="0"
          id="stop1566" />
     </linearGradient>
+    <meshgradient
+       inkscape:collect="always"
+       id="meshgradient2"
+       gradientUnits="userSpaceOnUse"
+       x="94.236221"
+       y="153.99055">
+      <meshrow
+         id="meshrow1508">
+        <meshpatch
+           id="meshpatch1508">
+          <stop
+             path="c 53.7986,0  107.597,0  161.395,2.84217e-14"
+             style="stop-color:#99c1f1;stop-opacity:1"
+             id="stop1508" />
+          <stop
+             path="c -0.00363459,34.0165  -0.00383912,67.9813  -0.000427368,102.005"
+             style="stop-color:#99c1f1;stop-opacity:1"
+             id="stop1509" />
+          <stop
+             path="c -53.7984,-2.70051e-05  -107.597,0.00143119  -161.395,0.0044755"
+             style="stop-color:#99c1f1;stop-opacity:1"
+             id="stop1510" />
+          <stop
+             path="c -0.00681061,-34.0281  -0.00682528,-67.9946  0.000427368,-102.009"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop1511" />
+        </meshpatch>
+        <meshpatch
+           id="meshpatch1511">
+          <stop
+             path="c 54.0441,-2.84217e-14  108.088,-2.84217e-14  162.133,-2.84217e-14"
+             id="stop1512" />
+          <stop
+             path="c 0,34.0217  -0.000424741,67.9877  -0.000427368,102.009"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop1513" />
+          <stop
+             path="c -54.0444,-0.00292244  -108.089,-0.00444837  -162.133,-0.0044755"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop1514" />
+        </meshpatch>
+      </meshrow>
+      <meshrow
+         id="meshrow1514">
+        <meshpatch
+           id="meshpatch1514">
+          <stop
+             path="c 0.000224116,33.9823  0.000427368,68.0239  0.000427368,102.012"
+             id="stop1515" />
+          <stop
+             path="c -53.7984,0  -107.597,0  -161.395,0"
+             style="stop-color:#dc8add;stop-opacity:1"
+             id="stop1516" />
+          <stop
+             path="c 0,-33.9846  2.62695e-06,-68.0245  -0.000427368,-102.008"
+             style="stop-color:#99c1f1;stop-opacity:1"
+             id="stop1517" />
+        </meshpatch>
+        <meshpatch
+           id="meshpatch1517">
+          <stop
+             path="c 1.72959e-05,33.9782  0.000427368,68.0184  0.000427368,102.008"
+             id="stop1518" />
+          <stop
+             path="c -54.0444,0  -108.089,0  -162.133,0"
+             style="stop-color:#dc8add;stop-opacity:1"
+             id="stop1519" />
+        </meshpatch>
+      </meshrow>
+    </meshgradient>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1740"
@@ -108,15 +158,6 @@
        x2="421.76378"
        y2="256"
        gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1"
-       id="linearGradient5"
-       gradientUnits="userSpaceOnUse"
-       x1="138.78729"
-       y1="138.78731"
-       x2="373.21271"
-       y2="373.21271" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -138,7 +179,7 @@
        id="g1749"
        transform="matrix(1.165238,0,0,1.165238,-101.68347,31.574195)">
       <rect
-         style="opacity:1;fill:url(#linearGradient5);fill-opacity:1;stroke:url(#linearGradient1741);stroke-width:8;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:url(#meshgradient2);fill-opacity:1;stroke:url(#linearGradient1741);stroke-width:8;stroke-dasharray:none;stroke-opacity:1"
          id="rect1"
          width="323.52756"
          height="204.01889"
