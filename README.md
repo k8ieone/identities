@@ -21,7 +21,7 @@ There is not any official release *yet*. You can get the latest preview build as
 
 Install it using `flatpak install identities.flatpak`.
 
-Note: The Flatpak can be buggy - see #32. If you're planning on using Identities I recommend using one of the native options below.
+Note: The Flatpak can be buggy - see [#32](https://github.com/k8ieone/identities/issues/32). If you're planning on using Identities I recommend using one of the native options below.
 
 ### Arch Linux
 
@@ -32,7 +32,7 @@ Available on the AUR! Install using you favorite [AUR helper](https://wiki.archl
 
 ### Alpine / postmarketOS
 
-Work in progress.
+Work in progress. See [#31](https://github.com/k8ieone/identities/issues/31) for progress.
 
 ### Your distro!
 
