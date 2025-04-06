@@ -1,9 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
-	<id>one.k8ie.Identities.desktop</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0-or-later</project_license>
-	<description>
-	  <p>No description</p>
-	</description>
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop-application">
+  <id>one.k8ie.Identities</id>
+  <launchable type="desktop-id">one.k8ie.Identities.desktop</launchable>
+  <name>Identities</name>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <content_rating type="oars-1.1"/>
+  <developer id="@k8ie@fosstodon.org">
+    <name>Kateřina Medvědová</name>
+    <url>https://k8ie.one/</url>
+  </developer>
+  <update_contact>k8ie_AT_mcld.eu</update_contact>
+  <summary>Modern password-store client made for GNOME</summary>
+
+  <description>
+    <p>Your password store, now mobile.</p>
+    <p>Features:</p>
+    <ul>
+      <li>An UI tailored to comfortable writing</li>
+      <li>A distraction-free mode</li>
+      <li>Dark, light and sepia themes</li>
+      <li>Everything you expect from a text editor, such as spellchecking or document statistics</li>
+      <li>Live preview of what you write</li>
+      <li>Export to all kind of formats: PDF, Word/Libreoffice, LaTeX, or even HTML slideshows</li>
+    </ul>
+  </description>
+
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+    <internet>offline-only</internet>
+  </supports>
+
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/password.png</image>
+      <caption>Viewing a password</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/mobile.png</image>
+      <caption>Mobile view</caption>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">https://github.com/k8ieone/identities</url>
+  <url type="bugtracker">https://github.com/k8ieone/identities/issues</url>
+  <url type="donation">https://liberapay.com/k8ie</url>
+  <url type="vcs-browser">https://github.com/k8ieone/identities</url>
+
 </component>
