@@ -14,23 +14,15 @@
   <summary>Modern password-store client made for GNOME</summary>
 
   <description>
-    <p>Your password store, now mobile.</p>
+    <p>A modern frontend for password-store, built for GNOME.</p>
     <p>Features:</p>
     <ul>
-      <li>An UI tailored to comfortable writing</li>
-      <li>A distraction-free mode</li>
-      <li>Dark, light and sepia themes</li>
-      <li>Everything you expect from a text editor, such as spellchecking or document statistics</li>
-      <li>Live preview of what you write</li>
-      <li>Export to all kind of formats: PDF, Word/Libreoffice, LaTeX, or even HTML slideshows</li>
+      <li>Adaptive UI - works great on phones and small screens</li>
+      <li>Supports as many arbitrary attributes as you want</li>
+      <li>Generates TOTPs (even multiple per file)</li>
+      <li>Support for adding multiple password stores in arbitrary locations</li>
     </ul>
   </description>
-
-  <recommends>
-    <control>keyboard</control>
-    <control>pointing</control>
-    <control>touch</control>
-  </recommends>
 
   <requires>
     <display_length compare="ge">360</display_length>
