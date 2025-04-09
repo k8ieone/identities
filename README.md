@@ -32,7 +32,7 @@ Available on the AUR! Install using you favorite [AUR helper](https://wiki.archl
 
 ### Alpine / postmarketOS
 
-Work in progress. See [#31](https://github.com/k8ieone/identities/issues/31) for progress.
+Available in Alpine Edge ([testing](https://pkgs.alpinelinux.org/packages?name=identities&branch=edge&repo=&arch=&origin=&flagged=&maintainer=) repository).
 
 ### Your distro!
 
