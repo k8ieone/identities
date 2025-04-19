@@ -34,6 +34,14 @@ Available on the AUR! Install using you favorite [AUR helper](https://wiki.archl
 
 Available in Alpine Edge ([testing](https://pkgs.alpinelinux.org/packages?name=identities&branch=edge&repo=&arch=&origin=&flagged=&maintainer=) repository).
 
+If you're on a stable release of Alpine or postmarketOS and don't want to switch to `edge` just to use Identities, you can follow [these instructions](https://wiki.alpinelinux.org/wiki/Repositories#Using_testing_repository) to add the `testing` repo on a stable release.
+
+After you're done, you can simply install Identities like so:
+
+```
+apk add identities@testing
+```
+
 ### Your distro!
 
 Maintaining packages can be a challenge, so I truly appreciate any help! If you'd like to package Identities for your distribution, I'd love to have you involved.  
