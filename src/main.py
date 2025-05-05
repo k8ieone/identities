@@ -53,12 +53,15 @@ class IdentitiesApplication(Adw.Application):
         about = Adw.AboutDialog(application_name='Identities',
                                 application_icon='one.k8ie.Identities',
                                 developer_name='Kateřina Medvědová',
-                                version='0.1.3',
+                                version='0.1.4',
                                 developers=['Kateřina Medvědová https://github.com/k8ieone'],
                                 copyright='© 2025 Kateřina Medvědová',
                                 license_type=Gtk.License(3),
                                 website='https://github.com/k8ieone/identities',
                                 issue_url='https://github.com/k8ieone/identities/issues')
+        about.add_credit_section("Icon design", [
+                                 "Jakub Steiner https://gitlab.gnome.org/jimmac",
+                                 ])
         about.add_credit_section("Inspiration", [
                                  "Caerbannog https://git.sr.ht/~craftyguy/caerbannog",
                                  "passpy https://github.com/bfrascher/passpy"
