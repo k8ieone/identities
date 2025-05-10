@@ -32,7 +32,8 @@ class IdentitiesApplication(Adw.Application):
 
     def __init__(self):
         super().__init__(application_id='one.k8ie.Identities',
-                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+                         resource_base_path='/one/k8ie/Identities')
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
