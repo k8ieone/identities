@@ -8,5 +8,5 @@ Categories=Utility;
 Keywords=password;logins;manager;
 Comment=Client for password-store
 StartupNotify=true
-DBusActivatable=false
+DBusActivatable=true
 X-Purism-FormFactor=Workstation;Mobile;
