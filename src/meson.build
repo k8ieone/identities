@@ -5,6 +5,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'window.blp',
     'gtk/help-overlay.blp',
+    'setup_wizard.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -39,7 +40,8 @@ identities_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'passutils.py'
+  'passutils.py',
+  'setup_wizard.py'
 ]
 
 install_data(identities_sources, install_dir: moduledir)

@@ -53,35 +53,13 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.settings = Gio.Settings.new("one.k8ie.Identities")
-        if len(self.settings.get_strv("stores")) == 1:
-            # Skip both setup wizard and store selection if only one store is configured
-            self.store_selection_done(self.settings.get_strv("stores")[0])
-        elif len(self.settings.get_strv("stores")) > 1:
-            # Skip setup wizard and jump to store selection if more stores are configured
-            selection_view = Adw.NavigationView()
-            self.build_stores(self.stores_selector_clamp, False)
-            selection_view.push(self.store_selection)
-            self.set_content(selection_view)
+        self.settings = super().settings
         self.bind_actions()
         self.otp_rows = {}
-
-    def on_start_action(self, widget, _):
-        """Callback for the win.start action."""
-        self.setup_wizard.push(self.store_setup)
 
     def on_open_settings(self, widget, nothing=_):
         self.build_stores(self.stores_editor_clamp, True)
         self.options_dialog.present(parent=self)
-
-    def on_settings_done(self, widget, _):
-        if len(self.settings.get_strv("stores")) > 0:
-            self.build_stores(self.stores_selector_clamp, False)
-            self.setup_wizard.push(self.store_selection)
-        else:
-            dialog = Adw.AlertDialog(heading="No stores configured", body="You must first configure at least one password store in the settings.")
-            dialog.add_response(id="ok", label="Okay, I'll add one")
-            dialog.present(parent=self)
 
     def on_store_selected(self, widget):
         self.store_selection_done(widget.get_subtitle())
@@ -407,10 +385,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def bind_actions(self):
         actions = {
-            "start": {
-                "method": self.on_start_action,
-                "ret": None
-            },
             "directory": {
                 "method": self.on_directory_action,
                 "ret": GLib.VariantType.new("s")
