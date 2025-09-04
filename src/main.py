@@ -25,6 +25,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import IdentitiesWindow
+from .setup_wizard import OnboardingWindow
 
 
 class IdentitiesApplication(Adw.Application):
@@ -37,6 +38,7 @@ class IdentitiesApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
+        self.settings = Gio.Settings.new("one.k8ie.Identities")
 
     def do_activate(self):
         """Called when the application is activated.
@@ -46,7 +48,15 @@ class IdentitiesApplication(Adw.Application):
         """
         win = self.props.active_window
         if not win:
-            win = IdentitiesWindow(application=self)
+            if len(self.settings.get_strv("stores")) == 1:
+                # Skip both setup wizard and store selection if only one store is configured
+                win = IdentitiesWindow(application=self)
+            elif len(self.settings.get_strv("stores")) > 1:
+                # Skip setup wizard and jump to store selection if more stores are configured
+                pass
+            else:
+                # Run the setup wizard
+                win = OnboardingWindow(application=self)
         win.present()
 
     def on_about_action(self, widget, _):
