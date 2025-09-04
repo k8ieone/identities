@@ -1,0 +1,53 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $StoreSelectionWindow : Adw.ApplicationWindow {
+  title: "Identities Store Selection";
+  default-height: 450;
+  default-width: 800;
+  content: Adw.NavigationPage {
+    title: "Select your store";
+    child: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        show-title: false;
+        [end]
+        Gtk.MenuButton {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: _("Menu");
+          menu-model: primary_menu;
+        }
+      }
+      content: Gtk.ScrolledWindow {
+        child: Adw.StatusPage {
+          title: "Select your password store";
+          Adw.Clamp stores_selector_clamp {
+            maximum-size: 320;
+            // Built in code - see window.build_stores
+          }
+        };
+      };
+    };
+  };
+}
+
+// Menus
+menu primary_menu {
+  section {
+    item {
+      label: _("_Preferences");
+      action: "win.open_settings";
+    }
+
+    item {
+      label: _("_Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: _("_About Identities");
+      action: "app.about";
+    }
+  }
+}

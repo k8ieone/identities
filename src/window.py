@@ -25,6 +25,7 @@ from gi.repository import Gdk
 
 from pathlib import Path
 from .passutils import Store
+from .settings import SettingsDialog
 import pyotp
 import datetime
 import math
@@ -37,32 +38,20 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     clipboard = Gdk.Display.get_default().get_clipboard()
     primary_menu = Gtk.Template.Child()
 
-    setup_wizard = Gtk.Template.Child()
-    store_setup = Gtk.Template.Child()
-
-    options_dialog = Gtk.Template.Child()
-    store_selection = Gtk.Template.Child()
-
-    stores_selector_clamp = Gtk.Template.Child()
-    stores_editor_clamp = Gtk.Template.Child()
-
     splitview = Gtk.Template.Child()
     browser_nav_view = Gtk.Template.Child()
     viewer_nav_view = Gtk.Template.Child()
     brkpoint = Gtk.Template.Child()
 
-    def __init__(self, **kwargs):
+    def __init__(self, store_path, **kwargs):
         super().__init__(**kwargs)
-        self.settings = super().settings
+        self.settings = self.get_application().settings
         self.bind_actions()
         self.otp_rows = {}
+        self.store_selection_done(store_path)
 
     def on_open_settings(self, widget, nothing=_):
-        self.build_stores(self.stores_editor_clamp, True)
-        self.options_dialog.present(parent=self)
-
-    def on_store_selected(self, widget):
-        self.store_selection_done(widget.get_subtitle())
+        SettingsDialog().show(parent=self)
 
     def store_selection_done(self, store):
         self.cur_dir = Path(store)
@@ -72,77 +61,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         page = self.build_navigation_page(self.cur_dir)
         self.browser_nav_view.add(page)
         self.generate_passwords_list()
-        self.set_content(self.splitview)
         self.brkpoint.connect("apply", self.on_collapse)
         self.brkpoint.connect("unapply", self.on_uncollapse)
-
-    def on_settings_row_removal(self, widget):
-        # Gets the parent action row
-        row = widget.get_parent().get_parent().get_parent()
-        removed_store = row.get_subtitle()
-        stores = self.settings.get_strv("stores")
-        for index, store in enumerate(stores):
-            if store == removed_store:
-                del stores[index]
-                self.settings.set_strv("stores", stores)
-                # More efficient option - only remove the row
-                #self.edit_group.remove(row)
-                break
-        # Easier solution - rebuild the page
-        self.build_stores(self.stores_editor_clamp, True)
-        self.build_stores(self.stores_selector_clamp, False)
-
-    def on_settings_row_add(self, widget):
-        """Thanks, ChatGPT 💀"""
-        def on_response(dialog, result, _):
-            try:
-                file = dialog.select_folder_finish(result)
-                if file:
-                    print("Selected file: {}".format(file.get_path()))
-                else:
-                    print("No file selected")
-            except GLib.Error as e:
-                print("Error: {}".format(e.message))
-            else:
-                stores = self.settings.get_strv("stores")
-                stores.append(file.get_path())
-                self.settings.set_strv("stores", stores)
-                self.build_stores(self.stores_editor_clamp, True)
-                self.build_stores(self.stores_selector_clamp, False)
-
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Select your password store directory")
-        dialog.select_folder(self, None, on_response, None)
-
-    def build_stores(self, parent, editable):
-        """Builds stores list for the preferences and store selection"""
-        box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
-        if editable:
-            add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic")
-            add_button.connect("clicked", self.on_settings_row_add)
-            group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
-            box.append(group)
-        else:
-            group = Adw.PreferencesGroup()
-            box.append(group)
-            buttons_group = Adw.PreferencesGroup()
-            manage_button = Adw.ButtonRow(title="Manage password stores")
-            manage_button.connect("activated", self.on_open_settings)
-            buttons_group.add(manage_button)
-            box.append(buttons_group)
-        for store in self.settings.get_strv("stores"):
-            row = Adw.ActionRow(title=Path(store).stem, subtitle=store)
-            if editable:
-                remove_button = Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3))
-                remove_button.connect("clicked", self.on_settings_row_removal)
-                row.add_suffix(remove_button)
-                row.set_activatable(False)
-            else:
-                row.add_suffix(Gtk.Image(icon_name="go-next-symbolic"))
-                row.set_activatable(True)
-                row.connect("activated", self.on_store_selected)
-            group.add(row)
-        parent.set_child(box)
 
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
@@ -399,10 +319,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             },
             "open_settings": {
                 "method": self.on_open_settings,
-                "ret": None
-            },
-            "settings_done": {
-                "method": self.on_settings_done,
                 "ret": None
             }
         }
