@@ -26,6 +26,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import IdentitiesWindow
 from .setup_wizard import OnboardingWindow
+from .store_selection import StoreSelectionWindow
 
 
 class IdentitiesApplication(Adw.Application):
@@ -50,14 +51,14 @@ class IdentitiesApplication(Adw.Application):
         if not win:
             if len(self.settings.get_strv("stores")) == 1:
                 # Skip both setup wizard and store selection if only one store is configured
-                win = IdentitiesWindow(application=self)
+                win = IdentitiesWindow(self.settings.get_strv("stores")[0], application=self)
             elif len(self.settings.get_strv("stores")) > 1:
                 # Skip setup wizard and jump to store selection if more stores are configured
-                pass
+                win = StoreSelectionWindow(application=self)
             else:
                 # Run the setup wizard
                 win = OnboardingWindow(application=self)
-        win.present()
+            win.present()
 
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""

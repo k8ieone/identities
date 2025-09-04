@@ -4,5 +4,7 @@
     <file preprocess="xml-stripblanks">window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">setup_wizard.ui</file>
+    <file preprocess="xml-stripblanks">settings.ui</file>
+    <file preprocess="xml-stripblanks">store_selection.ui</file>
   </gresource>
 </gresources>

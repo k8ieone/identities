@@ -1,0 +1,21 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SettingsDialog : Adw.PreferencesDialog {
+  content-height: 300;
+  content-width: 300;
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+    }
+    content: Gtk.ScrolledWindow {
+      child: Adw.PreferencesPage {
+        title: "Configure your password stores";
+        Adw.Clamp stores_editor_clamp {
+          maximum-size: 280;
+          // Built in code - see settings.build_stores
+        }
+      };
+    };
+  };
+}
