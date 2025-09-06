@@ -26,7 +26,7 @@ from gi.repository import Gdk
 from pathlib import Path
 
 from .passutils import Store
-from .settings import SettingsDialog
+from .settings_dialog import SettingsDialog
 from .menu_button import IdMenuButton
 
 import pyotp
