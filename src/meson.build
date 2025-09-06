@@ -6,9 +6,9 @@ blueprints = custom_target('blueprints',
     'window.blp',
     'gtk/help-overlay.blp',
     'components/menu-button.blp',
+    'components/settings/settings-dialog.blp',
     'setup-wizard.blp',
-    'store-selection.blp',
-    'settings.blp'
+    'store-selection.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -45,9 +45,9 @@ identities_sources = [
   'window.py',
   'passutils.py',
   'components/menu_button.py',
+  'components/settings/settings_dialog.py',
   'setup_wizard.py',
-  'store_selection.py',
-  'settings.py'
+  'store_selection.py'
 ]
 
 install_data(identities_sources, install_dir: moduledir)

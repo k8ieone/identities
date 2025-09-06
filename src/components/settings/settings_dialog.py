@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 from pathlib import Path
 
-@Gtk.Template(resource_path='/one/k8ie/Identities/settings.ui')
+@Gtk.Template(resource_path='/one/k8ie/Identities/components/settings/settings-dialog.ui')
 class SettingsDialog(Adw.PreferencesDialog):
     __gtype_name__ = 'SettingsDialog'
 
