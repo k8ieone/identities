@@ -25,7 +25,7 @@ from pathlib import Path
 from .settings import SettingsDialog
 from .window import IdentitiesWindow
 
-@Gtk.Template(resource_path='/one/k8ie/Identities/store_selection.ui')
+@Gtk.Template(resource_path='/one/k8ie/Identities/store-selection.ui')
 class StoreSelectionWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'StoreSelectionWindow'
 

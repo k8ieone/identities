@@ -23,7 +23,7 @@ from gi.repository import Gtk
 from .settings import SettingsDialog
 from .store_selection import StoreSelectionWindow
 
-@Gtk.Template(resource_path='/one/k8ie/Identities/setup_wizard.ui')
+@Gtk.Template(resource_path='/one/k8ie/Identities/setup-wizard.ui')
 class OnboardingWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'OnboardingWindow'
 
