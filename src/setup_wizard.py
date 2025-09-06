@@ -41,9 +41,7 @@ class OnboardingWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_settings_open(self, widget):
-        #self.build_stores(self.stores_editor_clamp, True)
         SettingsDialog().show(self)
-        #self.options_dialog.present(parent=self)
 
     @Gtk.Template.Callback()
     def on_wizard_done(self, widget):

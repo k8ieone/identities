@@ -24,8 +24,11 @@ from gi.repository import GLib
 from gi.repository import Gdk
 
 from pathlib import Path
+
 from .passutils import Store
 from .settings import SettingsDialog
+from .menu_button import IdMenuButton
+
 import pyotp
 import datetime
 import math
@@ -36,7 +39,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'IdentitiesWindow'
 
     clipboard = Gdk.Display.get_default().get_clipboard()
-    primary_menu = Gtk.Template.Child()
 
     splitview = Gtk.Template.Child()
     browser_nav_view = Gtk.Template.Child()
@@ -284,7 +286,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Creates a new password browser Adw.NavigationPage for a given directory."""
         pp = self.password_store_dir / path
         bar = Adw.HeaderBar()
-        bar.pack_end(Gtk.MenuButton(primary=True, icon_name="open-menu-symbolic", menu_model=self.primary_menu))
+        bar.pack_end(IdMenuButton())
         scrolledwindow = Gtk.ScrolledWindow(child=self.build_passwords_list_box(pp))
         toolbarview = Adw.ToolbarView(content=scrolledwindow)
         toolbarview.add_top_bar(bar)
@@ -316,10 +318,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             "copy": {
                 "method": self.on_copy_action,
                 "ret": GLib.VariantType.new("s")
-            },
-            "open_settings": {
-                "method": self.on_open_settings,
-                "ret": None
             }
         }
         for action in actions:

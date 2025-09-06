@@ -12,12 +12,7 @@ template $StoreSelectionWindow : Adw.ApplicationWindow {
       Adw.HeaderBar {
         show-title: false;
         [end]
-        Gtk.MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Menu");
-          menu-model: primary_menu;
-        }
+        $IdMenuButton {}
       }
       content: Gtk.ScrolledWindow {
         child: Adw.StatusPage {
@@ -30,24 +25,4 @@ template $StoreSelectionWindow : Adw.ApplicationWindow {
       };
     };
   };
-}
-
-// Menus
-menu primary_menu {
-  section {
-    item {
-      label: _("_Preferences");
-      action: "win.open_settings";
-    }
-
-    item {
-      label: _("_Keyboard Shortcuts");
-      action: "win.show-help-overlay";
-    }
-
-    item {
-      label: _("_About Identities");
-      action: "app.about";
-    }
-  }
 }

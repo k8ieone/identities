@@ -19,12 +19,9 @@
 
 from gi.repository import Adw
 from gi.repository import Gtk
-from gi.repository import Gio
-from gi.repository import GLib
-from gi.repository import Gdk
 
 from pathlib import Path
-from .passutils import Store
+
 from .settings import SettingsDialog
 from .window import IdentitiesWindow
 
