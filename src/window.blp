@@ -45,24 +45,3 @@ Adw.NavigationPage password_browser {
   child: Adw.NavigationView browser_nav_view {
   };
 }
-
-
-// Menus
-menu primary_menu {
-  section {
-    item {
-      label: _("_Preferences");
-      action: "win.open_settings";
-    }
-
-    item {
-      label: _("_Keyboard Shortcuts");
-      action: "win.show-help-overlay";
-    }
-
-    item {
-      label: _("_About Identities");
-      action: "app.about";
-    }
-  }
-}

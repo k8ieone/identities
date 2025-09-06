@@ -5,6 +5,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'window.blp',
     'gtk/help-overlay.blp',
+    'components/menu-button.blp',
     'setup_wizard.blp',
     'settings.blp',
     'store_selection.blp'
@@ -45,7 +46,8 @@ identities_sources = [
   'passutils.py',
   'setup_wizard.py',
   'settings.py',
-  'store_selection.py'
+  'store_selection.py',
+  'components/menu_button.py',
 ]
 
 install_data(identities_sources, install_dir: moduledir)

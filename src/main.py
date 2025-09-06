@@ -24,6 +24,8 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
+
+from .settings import SettingsDialog
 from .window import IdentitiesWindow
 from .setup_wizard import OnboardingWindow
 from .store_selection import StoreSelectionWindow
@@ -85,7 +87,7 @@ class IdentitiesApplication(Adw.Application):
 
     def on_preferences_action(self, widget, _):
         """Callback for the app.preferences action."""
-        print('app.preferences action activated')
+        SettingsDialog().show(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.

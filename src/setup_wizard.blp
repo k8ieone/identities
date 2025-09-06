@@ -16,19 +16,14 @@ Adw.NavigationView setup_wizard {
       Adw.HeaderBar {
         show-title: false;
         [end]
-        Gtk.MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Menu");
-          menu-model: primary_menu;
-        }
+      $IdMenuButton {}
       }
       content: Adw.StatusPage {
         title: "Welcome to Identities";
         description: "The standard unix password manager for GNOME";
         child: Adw.Clamp {
           maximum-size: 250;
-          child: Gtk.Button start {
+          child: Gtk.Button {
             styles ["suggested-action", "pill"]
             label: "Let's get started!";
             clicked => $on_wizard_started();
@@ -44,12 +39,7 @@ Adw.NavigationView setup_wizard {
       Adw.HeaderBar {
         show-title: false;
         [end]
-        Gtk.MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Menu");
-          menu-model: primary_menu;
-        }
+        $IdMenuButton {}
       }
       content: Adw.StatusPage {
         title: "Setup your password stores";
@@ -58,12 +48,12 @@ Adw.NavigationView setup_wizard {
           maximum-size: 250;
           child: Gtk.Box {
             orientation: vertical;
-            Gtk.Button open_settings {
+            Gtk.Button {
               styles ["suggested-action", "pill"]
               label: "Open settings";
               clicked => $on_settings_open();
             }
-            Gtk.Button settings_done {
+            Gtk.Button {
               styles ["pill"]
               label: "All set!";
               clicked => $on_wizard_done();
@@ -72,25 +62,5 @@ Adw.NavigationView setup_wizard {
         };
       };
     };
-  }
-}
-
-// Menus
-menu primary_menu {
-  section {
-    item {
-      label: _("_Preferences");
-      action: "win.open_settings";
-    }
-
-    item {
-      label: _("_Keyboard Shortcuts");
-      action: "win.show-help-overlay";
-    }
-
-    item {
-      label: _("_About Identities");
-      action: "app.about";
-    }
   }
 }
