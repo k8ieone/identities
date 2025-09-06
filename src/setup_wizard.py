@@ -20,7 +20,7 @@
 from gi.repository import Adw
 from gi.repository import Gtk
 
-from .settings import SettingsDialog
+from .settings_dialog import SettingsDialog
 from .store_selection import StoreSelectionWindow
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/setup-wizard.ui')

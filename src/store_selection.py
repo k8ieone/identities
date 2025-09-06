@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 from pathlib import Path
 
-from .settings import SettingsDialog
+from .settings_dialog import SettingsDialog
 from .window import IdentitiesWindow
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/store-selection.ui')

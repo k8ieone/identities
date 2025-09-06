@@ -25,7 +25,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 
-from .settings import SettingsDialog
+from .settings_dialog import SettingsDialog
 from .window import IdentitiesWindow
 from .setup_wizard import OnboardingWindow
 from .store_selection import StoreSelectionWindow
