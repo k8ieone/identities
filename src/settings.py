@@ -19,16 +19,8 @@
 
 from gi.repository import Adw
 from gi.repository import Gtk
-from gi.repository import Gio
-from gi.repository import GLib
-from gi.repository import Gdk
 
 from pathlib import Path
-from .passutils import Store
-import pyotp
-import datetime
-import math
-import time
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/settings.ui')
 class SettingsDialog(Adw.PreferencesDialog):
