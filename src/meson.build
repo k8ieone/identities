@@ -44,9 +44,9 @@ identities_sources = [
   'main.py',
   'window.py',
   'passutils.py',
-  'components/menu-button.py',
-  'setup-wizard.py',
-  'store-selection.py',
+  'components/menu_button.py',
+  'setup_wizard.py',
+  'store_selection.py',
   'settings.py'
 ]
 
