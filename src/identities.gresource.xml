@@ -5,6 +5,7 @@
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">components/menu-button.ui</file>
     <file preprocess="xml-stripblanks">components/settings/settings-dialog.ui</file>
+    <file preprocess="xml-stripblanks">components/settings/settings-store-row.ui</file>
     <file preprocess="xml-stripblanks">setup-wizard.ui</file>
     <file preprocess="xml-stripblanks">store-selection.ui</file>
   </gresource>

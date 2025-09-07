@@ -57,6 +57,9 @@ class StoreSelectionWindow(Adw.ApplicationWindow):
         dialog.set_title("Select your password store directory")
         dialog.select_folder(self.parent, None, on_response, None)
 
+    def do_activate_settings(self, widget):
+        SettingsDialog().show(self)
+
     def build_stores(self, parent, editable):
         """Builds stores list for the preferences and store selection"""
         box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
@@ -70,7 +73,7 @@ class StoreSelectionWindow(Adw.ApplicationWindow):
             box.append(group)
             buttons_group = Adw.PreferencesGroup()
             manage_button = Adw.ButtonRow(title="Manage password stores")
-            manage_button.connect("activated", SettingsDialog().present)
+            manage_button.connect("activated", self.do_activate_settings)
             buttons_group.add(manage_button)
             box.append(buttons_group)
         for store in self.settings.get_strv("stores"):

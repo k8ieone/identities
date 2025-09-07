@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $SettingsDialog : Adw.PreferencesDialog {
-  content-height: 300;
+  content-height: 400;
   content-width: 300;
   child: Adw.ToolbarView {
     [top]
@@ -11,9 +11,21 @@ template $SettingsDialog : Adw.PreferencesDialog {
     content: Gtk.ScrolledWindow {
       child: Adw.PreferencesPage {
         title: "Configure your password stores";
-        Adw.Clamp stores_editor_clamp {
+        Adw.Clamp {
           maximum-size: 280;
-          // Built in code - see settings.build_stores
+          Gtk.Box {
+            spacing: 20;
+            orientation: vertical;
+            Adw.PreferencesGroup stores_group {
+              title: "Stores";
+              header-suffix: Gtk.Button {
+                icon-name: "list-add-symbolic";
+                styles ["flat"]
+                clicked => $on_settings_row_add();
+              };
+              // Store rows added in code, see settings_dialog.build_stores
+            }
+          }
         }
       };
     };
