@@ -1,0 +1,15 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SettingsStoreRow : Adw.ActionRow {
+  title: "My password store";
+  subtitle: "/some/path/to/my/password/store";
+  [suffix]
+  Gtk.Button {
+    icon-name: "list-remove-symbolic";
+    halign: center;
+    valign: center;
+    styles ["flat"]
+    clicked => $on_settings_row_removal();
+  }
+}

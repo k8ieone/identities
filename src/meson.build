@@ -7,6 +7,7 @@ blueprints = custom_target('blueprints',
     'gtk/help-overlay.blp',
     'components/menu-button.blp',
     'components/settings/settings-dialog.blp',
+    'components/settings/settings-store-row.blp',
     'setup-wizard.blp',
     'store-selection.blp'
   ),
@@ -46,6 +47,7 @@ identities_sources = [
   'passutils.py',
   'components/menu_button.py',
   'components/settings/settings_dialog.py',
+  'components/settings/settings_store_row.py',
   'setup_wizard.py',
   'store_selection.py'
 ]

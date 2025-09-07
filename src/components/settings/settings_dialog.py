@@ -23,36 +23,25 @@ from gi.repository import GLib
 
 from pathlib import Path
 
+from .settings_store_row import SettingsStoreRow
+
 @Gtk.Template(resource_path='/one/k8ie/Identities/components/settings/settings-dialog.ui')
 class SettingsDialog(Adw.PreferencesDialog):
     __gtype_name__ = 'SettingsDialog'
 
-    stores_editor_clamp = Gtk.Template.Child()
+    stores_group = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.children = []
 
     def show(self, parent):
         self.parent = parent
-        self.settings = parent.settings
-        self.build_stores(self.stores_editor_clamp)
         self.present(parent=parent)
+        self.settings = self.get_root().get_application().settings
+        self.build_stores()
 
-    def on_settings_row_removal(self, widget):
-        # Gets the parent action row
-        row = widget.get_parent().get_parent().get_parent()
-        removed_store = row.get_subtitle()
-        stores = self.settings.get_strv("stores")
-        for index, store in enumerate(stores):
-            if store == removed_store:
-                del stores[index]
-                self.settings.set_strv("stores", stores)
-                # More efficient option - only remove the row
-                #self.edit_group.remove(row)
-                break
-        # Easier solution - rebuild the page
-        self.build_stores(self.stores_editor_clamp)
-
+    @Gtk.Template.Callback()
     def on_settings_row_add(self, widget):
         """Thanks, ChatGPT 💀"""
         def on_response(dialog, result, _):
@@ -68,24 +57,17 @@ class SettingsDialog(Adw.PreferencesDialog):
                 stores = self.settings.get_strv("stores")
                 stores.append(file.get_path())
                 self.settings.set_strv("stores", stores)
-                self.build_stores(self.stores_editor_clamp)
-
+                self.build_stores()
         dialog = Gtk.FileDialog()
         dialog.set_title("Select your password store directory")
         dialog.select_folder(self.parent, None, on_response, None)
 
-    def build_stores(self, parent):
+    def build_stores(self):
         """Builds stores list for the preferences and store selection"""
-        box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
-        add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic")
-        add_button.connect("clicked", self.on_settings_row_add)
-        group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
-        box.append(group)
+        for child in self.children:
+            self.stores_group.remove(child)
+        self.children = []
         for store in self.settings.get_strv("stores"):
-            row = Adw.ActionRow(title=Path(store).stem, subtitle=store)
-            remove_button = Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3))
-            remove_button.connect("clicked", self.on_settings_row_removal)
-            row.add_suffix(remove_button)
-            row.set_activatable(False)
-            group.add(row)
-        parent.set_child(box)
+            row = SettingsStoreRow(Path(store).stem, store, self.build_stores)
+            self.children.append(row)
+            self.stores_group.add(row)
