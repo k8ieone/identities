@@ -19,9 +19,6 @@
 
 from gi.repository import Adw
 from gi.repository import Gtk
-from gi.repository import GLib
-
-from pathlib import Path
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/components/settings/settings-store-row.ui')
 class SettingsStoreRow(Adw.ActionRow):
