@@ -19,6 +19,7 @@
 
 from gi.repository import Adw
 from gi.repository import Gtk
+from gi.repository import GLib
 
 from pathlib import Path
 
@@ -34,7 +35,7 @@ class SettingsDialog(Adw.PreferencesDialog):
     def show(self, parent):
         self.parent = parent
         self.settings = parent.settings
-        self.build_stores(self.stores_editor_clamp, True)
+        self.build_stores(self.stores_editor_clamp)
         self.present(parent=parent)
 
     def on_settings_row_removal(self, widget):
@@ -50,8 +51,7 @@ class SettingsDialog(Adw.PreferencesDialog):
                 #self.edit_group.remove(row)
                 break
         # Easier solution - rebuild the page
-        self.build_stores(self.stores_editor_clamp, True)
-        self.build_stores(self.stores_selector_clamp, False)
+        self.build_stores(self.stores_editor_clamp)
 
     def on_settings_row_add(self, widget):
         """Thanks, ChatGPT 💀"""
@@ -68,38 +68,24 @@ class SettingsDialog(Adw.PreferencesDialog):
                 stores = self.settings.get_strv("stores")
                 stores.append(file.get_path())
                 self.settings.set_strv("stores", stores)
-                self.build_stores(self.stores_editor_clamp, True)
+                self.build_stores(self.stores_editor_clamp)
 
         dialog = Gtk.FileDialog()
         dialog.set_title("Select your password store directory")
         dialog.select_folder(self.parent, None, on_response, None)
 
-    def build_stores(self, parent, editable):
+    def build_stores(self, parent):
         """Builds stores list for the preferences and store selection"""
         box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
-        if editable:
-            add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic")
-            add_button.connect("clicked", self.on_settings_row_add)
-            group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
-            box.append(group)
-        else:
-            group = Adw.PreferencesGroup()
-            box.append(group)
-            buttons_group = Adw.PreferencesGroup()
-            manage_button = Adw.ButtonRow(title="Manage password stores")
-            manage_button.connect("activated", self.on_open_settings)
-            buttons_group.add(manage_button)
-            box.append(buttons_group)
+        add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic")
+        add_button.connect("clicked", self.on_settings_row_add)
+        group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
+        box.append(group)
         for store in self.settings.get_strv("stores"):
             row = Adw.ActionRow(title=Path(store).stem, subtitle=store)
-            if editable:
-                remove_button = Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3))
-                remove_button.connect("clicked", self.on_settings_row_removal)
-                row.add_suffix(remove_button)
-                row.set_activatable(False)
-            else:
-                row.add_suffix(Gtk.Image(icon_name="go-next-symbolic"))
-                row.set_activatable(True)
-                row.connect("activated", self.on_store_selected)
+            remove_button = Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3))
+            remove_button.connect("clicked", self.on_settings_row_removal)
+            row.add_suffix(remove_button)
+            row.set_activatable(False)
             group.add(row)
         parent.set_child(box)
