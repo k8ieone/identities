@@ -23,74 +23,32 @@ from gi.repository import Gtk
 from pathlib import Path
 
 from .settings_dialog import SettingsDialog
-from .window import IdentitiesWindow
+from .selection_store_row import SelectionStoreRow
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/store-selection.ui')
 class StoreSelectionWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'StoreSelectionWindow'
 
-    stores_selector_clamp = Gtk.Template.Child()
+    stores_group = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.children = []
         self.settings = self.get_application().settings
-        self.build_stores(self.stores_selector_clamp, False)
+        self.build_stores()
 
-    def on_settings_row_add(self, widget):
-        """Thanks, ChatGPT 💀"""
-        def on_response(dialog, result, _):
-            try:
-                file = dialog.select_folder_finish(result)
-                if file:
-                    print("Selected file: {}".format(file.get_path()))
-                else:
-                    print("No file selected")
-            except GLib.Error as e:
-                print("Error: {}".format(e.message))
-            else:
-                stores = self.settings.get_strv("stores")
-                stores.append(file.get_path())
-                self.settings.set_strv("stores", stores)
-                self.build_stores(self.stores_selector_clamp, False)
-
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Select your password store directory")
-        dialog.select_folder(self.parent, None, on_response, None)
-
+    @Gtk.Template.Callback()
     def do_activate_settings(self, widget):
-        SettingsDialog().show(self)
+        d = SettingsDialog()
+        d.connect("closed", self.build_stores)
+        d.show(self)
 
-    def build_stores(self, parent, editable):
-        """Builds stores list for the preferences and store selection"""
-        box = Gtk.Box(spacing=20, orientation=Gtk.Orientation(1))
-        if editable:
-            add_button = Gtk.Button(css_classes=["flat"], icon_name="list-add-symbolic")
-            add_button.connect("clicked", self.on_settings_row_add)
-            group = Adw.PreferencesGroup(title="Stores", header_suffix=add_button)
-            box.append(group)
-        else:
-            group = Adw.PreferencesGroup()
-            box.append(group)
-            buttons_group = Adw.PreferencesGroup()
-            manage_button = Adw.ButtonRow(title="Manage password stores")
-            manage_button.connect("activated", self.do_activate_settings)
-            buttons_group.add(manage_button)
-            box.append(buttons_group)
+    def build_stores(self, *args):
+        """Builds the rows with stores"""
+        for child in self.children:
+            self.stores_group.remove(child)
+        self.children = []
         for store in self.settings.get_strv("stores"):
-            row = Adw.ActionRow(title=Path(store).stem, subtitle=store)
-            if editable:
-                remove_button = Gtk.Button(icon_name="list-remove-symbolic", css_classes=["flat"], halign=Gtk.Align(3), valign=Gtk.Align(3))
-                remove_button.connect("clicked", self.on_settings_row_removal)
-                row.add_suffix(remove_button)
-                row.set_activatable(False)
-            else:
-                row.add_suffix(Gtk.Image(icon_name="go-next-symbolic"))
-                row.set_activatable(True)
-                row.connect("activated", self.on_store_selected)
-            group.add(row)
-        parent.set_child(box)
-
-    def on_store_selected(self, widget):
-        store_path = widget.get_subtitle()
-        IdentitiesWindow(store_path, application=self.get_application()).present()
-        self.close()
+            row = SelectionStoreRow(Path(store).stem, store, self.build_stores)
+            self.children.append(row)
+            self.stores_group.add(row)
