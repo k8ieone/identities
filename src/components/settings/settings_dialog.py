@@ -63,7 +63,7 @@ class SettingsDialog(Adw.PreferencesDialog):
         dialog.select_folder(self.parent, None, on_response, None)
 
     def build_stores(self):
-        """Builds the stores rows"""
+        """Builds the rows with stores"""
         for child in self.children:
             self.stores_group.remove(child)
         self.children = []
