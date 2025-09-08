@@ -8,6 +8,7 @@ blueprints = custom_target('blueprints',
     'components/menu-button.blp',
     'components/settings/settings-dialog.blp',
     'components/settings/settings-store-row.blp',
+    'components/selection/selection-store-row.blp',
     'setup-wizard.blp',
     'store-selection.blp'
   ),
@@ -48,6 +49,7 @@ identities_sources = [
   'components/menu_button.py',
   'components/settings/settings_dialog.py',
   'components/settings/settings_store_row.py',
+  'components/selection/selection_store_row.py',
   'setup_wizard.py',
   'store_selection.py'
 ]

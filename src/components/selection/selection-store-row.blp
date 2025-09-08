@@ -1,0 +1,11 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SelectionStoreRow : Adw.ActionRow {
+  activatable: true;
+  activated => $on_store_selected();
+  [suffix]
+  Gtk.Image {
+    icon-name: "go-next-symbolic";
+  }
+}
