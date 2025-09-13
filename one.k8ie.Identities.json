@@ -7,7 +7,10 @@
     "finish-args" : [
         "--share=network",
         "--share=ipc",
-        "--filesystem=~/.gnupg",
+        "--filesystem=~/.gnupg/public-keys.d/pubring.db:ro",
+        "--filesystem=~/.gnupg/pubring.kbx:ro",
+        "--filesystem=~/.gnupg/common.conf:ro",
+        "--socket=gpg-agent",
         "--socket=fallback-x11",
         "--talk-name=org.freedesktop.secrets",
         "--talk-name=org.gnome.keyring.SystemPrompter",
