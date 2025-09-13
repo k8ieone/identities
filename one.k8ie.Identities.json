@@ -53,7 +53,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/k8ieone/identities",
-                    "tag" : "the-chosen-one"
+                    "tag" : "refactor"
                 }
             ]
         }
