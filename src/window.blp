@@ -15,7 +15,7 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
 }
 
 Adw.NavigationSplitView splitview {
-  sidebar: password_browser;
+  sidebar: $IdBrowserPage browser_root {};
   content: password_viewer_navigation;
 }
 
@@ -41,7 +41,4 @@ Adw.NavigationPage password_viewer_navigation {
 
 // Navigation pages for split-view sidebar
 // Mostly built in code - see window.build_navigation_page()
-Adw.NavigationPage password_browser {
-  child: Adw.NavigationView browser_nav_view {
-  };
-}
+
