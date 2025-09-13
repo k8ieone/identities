@@ -28,6 +28,7 @@ from pathlib import Path
 from .passutils import Store
 from .settings_dialog import SettingsDialog
 from .menu_button import IdMenuButton
+from .browser import IdBrowserPage
 
 import pyotp
 import datetime
@@ -41,7 +42,8 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     clipboard = Gdk.Display.get_default().get_clipboard()
 
     splitview = Gtk.Template.Child()
-    browser_nav_view = Gtk.Template.Child()
+    #browser_nav_view = Gtk.Template.Child()
+    browser_root = Gtk.Template.Child()
     viewer_nav_view = Gtk.Template.Child()
     brkpoint = Gtk.Template.Child()
 
@@ -57,11 +59,12 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def store_selection_done(self, store):
         self.cur_dir = Path(store)
+        self.browser_root.set_property("root", store)
         self.cur_viewer_page = None
         self.password_store_dir = Path(store)
         self.store = Store(store_dir=self.password_store_dir)
-        page = self.build_navigation_page(self.cur_dir)
-        self.browser_nav_view.add(page)
+        page = self.browser_root.build_navigation_page()
+        self.browser_root.browser_nav_view.add(page)
         self.generate_passwords_list()
         self.brkpoint.connect("apply", self.on_collapse)
         self.brkpoint.connect("unapply", self.on_uncollapse)
@@ -70,7 +73,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Callback for the win.directory action."""
         # Debug - to be removed
         print("Entering directory {}".format("{}".format(_.unpack())))
-        self.browser_nav_view.push_by_tag(_.unpack())
+        self.browser_root.browser_nav_view.push_by_tag(_.unpack())
         self.cur_dir = Path(_.unpack())
         self.generate_passwords_list()
 
@@ -81,7 +84,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         print("Showing password {}".format(str(pwd_path)))
         self.cur_viewer_page = self.build_viewer_page(pwd_path)
         if self.splitview.get_collapsed():
-            self.browser_nav_view.push(self.cur_viewer_page)
+            self.browser_root.browser_nav_view.push(self.cur_viewer_page)
         else:
             self.viewer_nav_view.push(self.cur_viewer_page)
 
@@ -89,14 +92,14 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Called when the split-navigation view is collapsed"""
         if self.cur_viewer_page is not None:
             self.viewer_nav_view.pop()
-            self.browser_nav_view.push(self.cur_viewer_page)
+            self.browser_root.browser_nav_view.push(self.cur_viewer_page)
         # Debug - to be removed
         print("Collapsed")
 
     def on_uncollapse(self, widget):
         """Called when the split-navigation view is uncollapsed"""
         if self.cur_viewer_page is not None:
-            self.browser_nav_view.pop()
+            self.browser_root.browser_nav_view.pop()
             self.viewer_nav_view.push(self.cur_viewer_page)
         # Debug - to be removed
         print("Uncollapsed")
@@ -261,39 +264,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         page.otp_rows = group_tuple[-1]
         return page
 
-    def build_passwords_list_box(self, directory):
-        """Creates a new list box populated with buttons for a given directory."""
-        box = Gtk.ListBox()
-        pp = self.password_store_dir / directory
-        dirs = sorted([x for x in pp.iterdir() if x.is_dir() and not x.name.startswith('.')], key=str)
-        pwds = sorted([x for x in pp.iterdir() if x.is_file() and not x.name.startswith('.')], key=str)
-        for entry in dirs:
-            # Debug - to be removed
-            #print("Add button: {}".format(entry))
-            #button = Adw.ButtonRow(action_name="navigation.push", action_target=GLib.Variant("s", str(entry)), title=str(entry.parts[-1]))
-            button = Adw.ButtonRow(action_name="win.directory", title=str(entry.parts[-1]), end_icon_name="go-next-symbolic")
-            button.set_action_target_value(GLib.Variant("s", str(entry)))
-            box.append(button)
-        for entry in pwds:
-            # Debug - to be removed
-            #print("Add button: {}".format(entry))
-            button = Adw.ButtonRow(action_name="win.password", title=str(entry.stem))
-            button.set_action_target_value(GLib.Variant("s", str(entry)))
-            box.append(button)
-        return box
-
-    def build_navigation_page(self, path):
-        """Creates a new password browser Adw.NavigationPage for a given directory."""
-        pp = self.password_store_dir / path
-        bar = Adw.HeaderBar()
-        bar.pack_end(IdMenuButton())
-        scrolledwindow = Gtk.ScrolledWindow(child=self.build_passwords_list_box(pp))
-        toolbarview = Adw.ToolbarView(content=scrolledwindow)
-        toolbarview.add_top_bar(bar)
-        #print("Build page: {}".format(path))
-        page = Adw.NavigationPage(title=pp.stem, tag=str(pp.absolute()), child=toolbarview)
-        return page
-
     def generate_passwords_list(self):
         """Ran every time the working directory changes, iterates through all directories and builds their pages."""
         dir_list = self.store.list_dir(self.cur_dir)
@@ -301,9 +271,9 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         pwds = dir_list[1]
         for entry in dirs:
             pp = self.password_store_dir / entry
-            if self.browser_nav_view.find_page(str(pp.absolute())) is None:
-                page = self.build_navigation_page(entry)
-                self.browser_nav_view.add(page)
+            if self.browser_root.browser_nav_view.find_page(str(pp.absolute())) is None:
+                page = self.browser_root.build_navigation_page(path=entry)
+                self.browser_root.browser_nav_view.add(page)
 
     def bind_actions(self):
         actions = {
