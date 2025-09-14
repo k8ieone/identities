@@ -34,10 +34,11 @@ from .store_selection import StoreSelectionWindow
 class IdentitiesApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self):
+    def __init__(self, version):
         super().__init__(application_id='one.k8ie.Identities',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
                          resource_base_path='/one/k8ie/Identities')
+        self.version = version
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
@@ -67,7 +68,7 @@ class IdentitiesApplication(Adw.Application):
         about = Adw.AboutDialog(application_name='Identities',
                                 application_icon='one.k8ie.Identities',
                                 developer_name='Kateřina Medvědová',
-                                version='0.1.4',
+                                version=self.version,
                                 developers=['Kateřina Medvědová https://github.com/k8ieone'],
                                 copyright='© 2025 Kateřina Medvědová',
                                 license_type=Gtk.License(3),
@@ -107,5 +108,5 @@ class IdentitiesApplication(Adw.Application):
 
 def main(version):
     """The application's entry point."""
-    app = IdentitiesApplication()
+    app = IdentitiesApplication(version)
     return app.run(sys.argv)
