@@ -8,6 +8,7 @@
     <file preprocess="xml-stripblanks">components/settings/settings-store-row.ui</file>
     <file preprocess="xml-stripblanks">components/selection/selection-store-row.ui</file>
     <file preprocess="xml-stripblanks">components/main/browser.ui</file>
+    <file preprocess="xml-stripblanks">components/main/browser-page.ui</file>
     <file preprocess="xml-stripblanks">components/main/viewer.ui</file>
     <file preprocess="xml-stripblanks">setup-wizard.ui</file>
     <file preprocess="xml-stripblanks">store-selection.ui</file>
