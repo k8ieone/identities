@@ -42,7 +42,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     clipboard = Gdk.Display.get_default().get_clipboard()
 
     splitview = Gtk.Template.Child()
-    #browser_nav_view = Gtk.Template.Child()
     viewer_nav_view = Gtk.Template.Child()
     brkpoint = Gtk.Template.Child()
 
