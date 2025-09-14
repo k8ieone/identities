@@ -28,7 +28,7 @@ from pathlib import Path
 from .passutils import Store
 from .settings_dialog import SettingsDialog
 from .menu_button import IdMenuButton
-from .browser import IdBrowserPage
+from .browser import IdBrowser
 
 import pyotp
 import datetime
@@ -43,7 +43,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     splitview = Gtk.Template.Child()
     #browser_nav_view = Gtk.Template.Child()
-    browser_root = Gtk.Template.Child()
     viewer_nav_view = Gtk.Template.Child()
     brkpoint = Gtk.Template.Child()
 
@@ -52,6 +51,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.settings = self.get_application().settings
         self.bind_actions()
         self.otp_rows = {}
+        self.browser = IdBrowser(root=store_path)
         self.store_selection_done(store_path)
 
     def on_open_settings(self, widget, nothing=_):
@@ -59,23 +59,16 @@ class IdentitiesWindow(Adw.ApplicationWindow):
 
     def store_selection_done(self, store):
         self.cur_dir = Path(store)
-        self.browser_root.set_property("root", store)
         self.cur_viewer_page = None
         self.password_store_dir = Path(store)
         self.store = Store(store_dir=self.password_store_dir)
-        page = self.browser_root.build_navigation_page()
-        self.browser_root.browser_nav_view.add(page)
-        self.generate_passwords_list()
+        self.splitview.set_sidebar(self.browser)
         self.brkpoint.connect("apply", self.on_collapse)
         self.brkpoint.connect("unapply", self.on_uncollapse)
 
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
-        # Debug - to be removed
-        print("Entering directory {}".format("{}".format(_.unpack())))
-        self.browser_root.browser_nav_view.push_by_tag(_.unpack())
-        self.cur_dir = Path(_.unpack())
-        self.generate_passwords_list()
+        self.browser.change_dir(_.unpack())
 
     def on_password_action(self, widget, _):
         """Callback for the win.password action."""
@@ -84,7 +77,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         print("Showing password {}".format(str(pwd_path)))
         self.cur_viewer_page = self.build_viewer_page(pwd_path)
         if self.splitview.get_collapsed():
-            self.browser_root.browser_nav_view.push(self.cur_viewer_page)
+            self.browser.browser_nav_view.push(self.cur_viewer_page)
         else:
             self.viewer_nav_view.push(self.cur_viewer_page)
 
@@ -92,14 +85,14 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Called when the split-navigation view is collapsed"""
         if self.cur_viewer_page is not None:
             self.viewer_nav_view.pop()
-            self.browser_root.browser_nav_view.push(self.cur_viewer_page)
+            self.browser.browser_nav_view.push(self.cur_viewer_page)
         # Debug - to be removed
         print("Collapsed")
 
     def on_uncollapse(self, widget):
         """Called when the split-navigation view is uncollapsed"""
         if self.cur_viewer_page is not None:
-            self.browser_root.browser_nav_view.pop()
+            self.browser.browser_nav_view.pop()
             self.viewer_nav_view.push(self.cur_viewer_page)
         # Debug - to be removed
         print("Uncollapsed")
@@ -206,7 +199,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
                 row.fraction_target = fraction_target
                 row.progressbar_animation = progressbar_animation
             elif index == 0:
-                title = "Password"
+                title = "password"
             elif ": " in line:
                 title = line.split(": ")[0]
                 text = line.removeprefix(title + ": ")
@@ -263,17 +256,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         page.connect("shown", self.password_page_shown)
         page.otp_rows = group_tuple[-1]
         return page
-
-    def generate_passwords_list(self):
-        """Ran every time the working directory changes, iterates through all directories and builds their pages."""
-        dir_list = self.store.list_dir(self.cur_dir)
-        dirs = dir_list[0]
-        pwds = dir_list[1]
-        for entry in dirs:
-            pp = self.password_store_dir / entry
-            if self.browser_root.browser_nav_view.find_page(str(pp.absolute())) is None:
-                page = self.browser_root.build_navigation_page(path=entry)
-                self.browser_root.browser_nav_view.add(page)
 
     def bind_actions(self):
         actions = {

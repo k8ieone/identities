@@ -1,0 +1,18 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $IdBrowserPage: Adw.NavigationPage {
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      [end]
+      $IdMenuButton {}
+    }
+    content: Gtk.ScrolledWindow {
+      child: Gtk.ListBox browser_list_box {
+        selection-mode: none;
+        styles ["navigation-sidebar"]
+      };
+    };
+  };
+}
