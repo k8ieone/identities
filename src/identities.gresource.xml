@@ -2,7 +2,7 @@
 <gresources>
   <gresource prefix="/one/k8ie/Identities">
     <file preprocess="xml-stripblanks">window.ui</file>
-    <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
     <file preprocess="xml-stripblanks">components/menu-button.ui</file>
     <file preprocess="xml-stripblanks">components/settings/settings-dialog.ui</file>
     <file preprocess="xml-stripblanks">components/settings/settings-store-row.ui</file>
