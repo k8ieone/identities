@@ -12,6 +12,8 @@ blueprints = custom_target('blueprints',
     'components/main/browser.blp',
     'components/main/browser-page.blp',
     'components/main/viewer.blp',
+    'components/main/viewer-page.blp',
+    'components/main/viewer-page-row.blp',
     'setup-wizard.blp',
     'store-selection.blp'
   ),
@@ -56,6 +58,8 @@ identities_sources = [
   'components/main/browser.py',
   'components/main/browser_page.py',
   'components/main/viewer.py',
+  'components/main/viewer_page.py',
+  'components/main/viewer_page_row.py',
   'setup_wizard.py',
   'store_selection.py'
 ]

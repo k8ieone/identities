@@ -16,29 +16,5 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
 
 Adw.NavigationSplitView splitview {
   // sidebar: $IdBrowser browser_root {}; - see window.store_selection_done()
-  content: password_viewer_navigation;
+  // content: password_viewer_navigation; - see window.store_selection_done()
 }
-
-// Navigation pages for split-view content
-Adw.NavigationPage password_viewer_navigation {
-  child: Adw.NavigationView viewer_nav_view {
-    Adw.NavigationPage {
-      title: "Select a password";
-      child: Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {
-          show-title: false;
-        }
-        content: Adw.StatusPage {
-          title: "No password selected";
-          description: "Select a password entry to view";
-        };
-      };
-    }
-  };
-}
-
-
-// Navigation pages for split-view sidebar
-// Mostly built in code - see window.build_navigation_page()
-
