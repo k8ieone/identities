@@ -1,0 +1,24 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $IdViewerPageRow : Adw.ActionRow {
+  child: Gtk.Box {
+    orientation: vertical;
+    Adw.PasswordEntryRow row {
+      // title: _("OTP");
+      // text: _("123456");
+      [suffix]
+      Gtk.Button {
+        icon-name: "edit-copy-symbolic";
+        has-frame: false;
+        valign: center;
+        action-name: "win.copy";
+      }
+    }
+    Gtk.ProgressBar otp_bar {
+      visible: false;
+      inverted: false;
+      // fraction: 1;
+    }
+  };
+}

@@ -1,0 +1,16 @@
+using Gtk 4.0;
+using Adw 1;
+
+// Normal row
+// This widget isn't used
+Adw.PasswordEntryRow {
+  title: _("password");
+  text: _("asdfghhjjk");
+  [suffix]
+  Gtk.Button {
+    icon-name: "edit-copy-symbolic";
+    has-frame: false;
+    valign: center;
+    action-name: "win.copy";
+  }
+}
