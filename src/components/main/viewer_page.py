@@ -36,13 +36,23 @@ class IdViewerPage(Adw.NavigationPage):
     root = GObject.Property(type=str)
 
     rows_group = Gtk.Template.Child()
+    toast_overlay = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.otp_rows = []
         if self.root != "":
             rel_path = Path(self.file).relative_to(Path(self.root))
             self.rows_group.set_description(str(rel_path))
         self.rows_group.set_title(Path(self.file).stem)
         decrypted_file = passutils.decrypt(self.file)
-        for row in decrypted_file.splitlines():
-            self.rows_group.add(IdViewerPageRow(content=row))
+        for index, row in enumerate(decrypted_file.splitlines()):
+            row_widget = IdViewerPageRow(content=row, index=index, toast_overlay=self.toast_overlay)
+            self.rows_group.add(row_widget)
+            if row.startswith("otpauth://totp"):
+                self.otp_rows.append(row_widget)
+
+    @Gtk.Template.Callback()
+    def on_page_hiden(self, page):
+        for widget in self.otp_rows:
+            widget.cancel_task()

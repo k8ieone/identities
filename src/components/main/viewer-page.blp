@@ -2,10 +2,11 @@ using Gtk 4.0;
 using Adw 1;
 
 template $IdViewerPage : Adw.NavigationPage {
+  hidden => $on_page_hiden();
   child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {}
-    content: Adw.ToastOverlay {
+    content: Adw.ToastOverlay toast_overlay {
       child: Adw.StatusPage {
         Adw.Clamp {
           maximum-size: 450;
