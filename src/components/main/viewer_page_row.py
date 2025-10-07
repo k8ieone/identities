@@ -20,25 +20,98 @@
 from gi.repository import Adw
 from gi.repository import Gtk
 from gi.repository import GObject
+from gi.repository import Gio, Gdk
 
 from pathlib import Path
+
+import pyotp
+import datetime
+import time
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/components/main/viewer-page-row.ui')
 class IdViewerPageRow(Adw.ActionRow):
     __gtype_name__ = 'IdViewerPageRow'
 
     content = GObject.Property(type=str)
+    index = GObject.Property(type=int)
+    toast_overlay = GObject.Property(type=Adw.ToastOverlay)
 
     row = Gtk.Template.Child()
     otp_bar = Gtk.Template.Child()
 
+    clipboard = Gdk.Display.get_default().get_clipboard()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # TODO: Fill the row with content
-        # Note: Somehow I need to make sure the first row gets titled as the password
-        if self.content.startswith("otpauth://totp"):
+        if self.index == 0:
+            self.row.set_title("password")
+            self.row.set_text(self.content)
+        elif self.content.startswith("otpauth://totp"):
             self.row.set_title("OTP")
             self.otp_bar.set_visible(True)
-        # passwords can contain ": "!!!!
+            self.otp = pyotp.parse_uri(self.content)
+            self.otp_init()
+            self.otp_task = self.create_otp_task()
         elif ": " in self.content:
-            pass
+            title = self.content.split(": ")[0]
+            self.row.set_title(title)
+            self.row.set_text(self.content.removeprefix(title + ": "))
+
+    @Gtk.Template.Callback()
+    def on_copy(self, widget):
+        self.clipboard.set(self.row.get_text())
+        self.toast_overlay.add_toast(Adw.Toast(title="Entry copied to clipboard!", timeout=2))
+
+    def map_value(self, value, from_min, from_max, to_min, to_max):
+        """Helper function - remaps a value from one range to a different range"""
+        return to_min + (value - from_min) * (to_max - to_min) / (from_max - from_min)
+
+    def otp_init(self):
+        """Prepares the various animation objects and sets the bar
+        to the right position before starting the OTP task"""
+        bar = self.otp_bar
+        fraction_target = Adw.PropertyAnimationTarget.new(bar, "fraction")
+        progressbar_animation = Adw.TimedAnimation.new(bar, 0, 1, 1 * 1000, fraction_target)
+        progressbar_animation.set_easing(0)
+        expires_in = self.otp.interval - datetime.datetime.now().timestamp() % self.otp.interval
+        #bar.set_fraction(self.map_value(expires_in, 0, self.otp.interval, 0.0, 1.0))
+        self.otp_bar.fraction_target = fraction_target
+        self.otp_bar.progressbar_animation = progressbar_animation
+        self.update_otp()
+
+    def create_otp_task(self):
+        """Called whenever creating a new task. Starts _task_internal_method in a thread"""
+        task = Gio.Task.new(self, Gio.Cancellable(), self.cancel_checker, None)
+        task.set_return_on_cancel(False)
+        task.run_in_thread(self._task_internal_method)
+        return task
+
+    def cancel_checker(self, window, task, _):
+        """Callback - function called after _task_internal_method finishes running"""
+        self.update_otp()
+        if not task.get_cancellable().is_cancelled():
+            new_task = self.create_otp_task()
+            self.otp_task = new_task
+
+    def update_otp(self):
+        expires_in = self.otp.interval - datetime.datetime.now().timestamp() % self.otp.interval
+        remapped = self.map_value(expires_in, 0, self.otp.interval, 0.0, 1.0)
+        animating_to = self.map_value(expires_in - 1, 0, self.otp.interval, 0.0, 1.0)
+        if animating_to < 0:
+            animating_to = 0
+        animating_from = self.map_value(expires_in, 0, self.otp.interval, 0.0, 1.0)
+        self.otp_bar.progressbar_animation.set_value_to(animating_to)
+        self.otp_bar.progressbar_animation.set_value_from(animating_from)
+        self.otp_bar.progressbar_animation.play()
+        self.row.set_text(self.otp.now())
+
+    def _task_internal_method (self, task, source_object, task_data, cancellable):
+        """Called by create_new_task in a thread"""
+        print("task running!")
+        time.sleep(1)
+        task.return_value(None)
+
+    def cancel_task(self):
+        """Called by IdViewerPage when hiding the viewer page"""
+        print("pow!")
+        self.otp_task.get_cancellable().cancel()

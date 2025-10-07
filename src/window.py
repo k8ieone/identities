@@ -38,7 +38,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
     clipboard = Gdk.Display.get_default().get_clipboard()
 
     splitview = Gtk.Template.Child()
-    brkpoint = Gtk.Template.Child()
 
     def __init__(self, store_path, **kwargs):
         super().__init__(**kwargs)
@@ -58,8 +57,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.store = Store(store_dir=self.password_store_dir)
         self.splitview.set_sidebar(self.browser)
         self.splitview.set_content(self.viewer)
-        self.brkpoint.connect("apply", self.on_collapse)
-        self.brkpoint.connect("unapply", self.on_uncollapse)
 
     def on_directory_action(self, widget, _):
         """Callback for the win.directory action."""
@@ -70,6 +67,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         # TODO: Check for existence (file could have been removed)
         self.viewer.show_pass(_.unpack())
 
+    @Gtk.Template.Callback()
     def on_collapse(self, widget):
         """Called when the split-navigation view is collapsed"""
         if self.cur_viewer_page is not None:
@@ -78,6 +76,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         # Debug - to be removed
         print("Collapsed")
 
+    @Gtk.Template.Callback()
     def on_uncollapse(self, widget):
         """Called when the split-navigation view is uncollapsed"""
         if self.cur_viewer_page is not None:
@@ -85,12 +84,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             self.viewer_nav_view.push(self.cur_viewer_page)
         # Debug - to be removed
         print("Uncollapsed")
-
-    def on_copy_action(self, widget, _):
-        """Callback for the win.copy action."""
-        # TODO: Fix toast
-        # self.toast_overlay.add_toast(Adw.Toast(title="Entry copied to clipboard!", timeout=2))
-        self.clipboard.set(_.unpack())
 
     def bind_actions(self):
         actions = {
@@ -100,10 +93,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
             },
             "password": {
                 "method": self.on_password_action,
-                "ret": GLib.VariantType.new("s")
-            },
-            "copy": {
-                "method": self.on_copy_action,
                 "ret": GLib.VariantType.new("s")
             }
         }

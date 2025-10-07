@@ -12,7 +12,7 @@ template $IdViewerPageRow : Adw.ActionRow {
         icon-name: "edit-copy-symbolic";
         has-frame: false;
         valign: center;
-        action-name: "win.copy";
+        clicked => $on_copy();
       }
     }
     Gtk.ProgressBar otp_bar {
