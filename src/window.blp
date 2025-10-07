@@ -10,8 +10,6 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
     setters {
       splitview.collapsed: true;
     }
-    apply => $on_collapse();
-    unapply => $on_uncollapse();
   }
   content: splitview;
 }

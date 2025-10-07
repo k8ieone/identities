@@ -44,7 +44,7 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.settings = self.get_application().settings
         self.bind_actions()
         self.browser = IdBrowser(root=store_path)
-        self.viewer = IdViewer(root=store_path)
+        self.viewer = IdViewer(root=store_path, splitview=self.splitview)
         self.store_selection_done(store_path)
 
     def on_open_settings(self, widget, nothing=_):
@@ -66,24 +66,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         """Callback for the win.password action."""
         # TODO: Check for existence (file could have been removed)
         self.viewer.show_pass(_.unpack())
-
-    @Gtk.Template.Callback()
-    def on_collapse(self, widget):
-        """Called when the split-navigation view is collapsed"""
-        if self.cur_viewer_page is not None:
-            self.viewer_nav_view.pop()
-            self.browser.browser_nav_view.push(self.cur_viewer_page)
-        # Debug - to be removed
-        print("Collapsed")
-
-    @Gtk.Template.Callback()
-    def on_uncollapse(self, widget):
-        """Called when the split-navigation view is uncollapsed"""
-        if self.cur_viewer_page is not None:
-            self.browser.browser_nav_view.pop()
-            self.viewer_nav_view.push(self.cur_viewer_page)
-        # Debug - to be removed
-        print("Uncollapsed")
 
     def bind_actions(self):
         actions = {

@@ -36,6 +36,7 @@ class IdViewer(Adw.NavigationPage):
     __gtype_name__ = 'IdViewer'
 
     root = GObject.Property(type=str, default="/")
+    splitview = GObject.Property(type=Adw.NavigationSplitView)
 
     viewer_nav_view = Gtk.Template.Child()
 
@@ -48,8 +49,5 @@ class IdViewer(Adw.NavigationPage):
         print("Showing password {}".format(file))
         self.cur_page = IdViewerPage(title=Path(file).stem, file=file, root=self.root)
         self.viewer_nav_view.push(self.cur_page)
-        # TODO: collapsing and uncollapsing
-        # if self.splitview.get_collapsed():
-        #     self.browser.browser_nav_view.push(self.cur_viewer_page)
-        # else:
-        #     self.viewer_nav_view.push(self.cur_viewer_page)
+        if self.splitview.get_collapsed():
+            self.splitview.set_show_content(True)
