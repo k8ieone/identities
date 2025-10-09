@@ -14,8 +14,7 @@
   <summary>Modern password-store client made for GNOME</summary>
 
   <description>
-    <p>A modern frontend for password-store, built for GNOME.</p>
-    <p>Features:</p>
+    <p>Features include:</p>
     <ul>
       <li>Adaptive UI - works great on phones and small screens</li>
       <li>Supports as many arbitrary attributes as you want</li>
@@ -39,6 +38,10 @@
     <screenshot type="default">
       <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/password.png</image>
       <caption>Viewing a password</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/store_selection.png</image>
+      <caption>Store selection</caption>
     </screenshot>
     <screenshot>
       <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/mobile.png</image>
