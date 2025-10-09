@@ -54,4 +54,15 @@
   <url type="donation">https://liberapay.com/k8ie</url>
   <url type="vcs-browser">https://github.com/k8ieone/identities</url>
 
+  <releases>
+    <release version="0.2.0" date="2025-10-09">
+      <description>
+        <p>Initial Flatpak release</p>
+        <ul>
+          <li>Huge refactor</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+
 </component>
