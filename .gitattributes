@@ -1,2 +1,1 @@
-misc/screenshots/mobile.png filter=lfs diff=lfs merge=lfs -text
-misc/screenshots/password.png filter=lfs diff=lfs merge=lfs -text
+misc/screenshots/ filter=lfs diff=lfs merge=lfs -text
