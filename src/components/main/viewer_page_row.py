@@ -43,6 +43,7 @@ class IdViewerPageRow(Adw.ActionRow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.obliterate_edit_button()
         if self.index == 0:
             self.row.set_title("password")
             self.row.set_text(self.content)
@@ -107,11 +108,26 @@ class IdViewerPageRow(Adw.ActionRow):
 
     def _task_internal_method (self, task, source_object, task_data, cancellable):
         """Called by create_new_task in a thread"""
-        print("task running!")
         time.sleep(1)
         task.return_value(None)
 
     def cancel_task(self):
         """Called by IdViewerPage when hiding the viewer page"""
-        print("pow!")
         self.otp_task.get_cancellable().cancel()
+
+    def obliterate_edit_button(self):
+        """Hack to hide the edit button"""
+        box = self.row.get_first_child()
+        if box and isinstance(box, Gtk.Box):
+            # Traverse all children of box to find the target widget
+            child = box.get_first_child()
+            while child:
+                # Check if the child contains the expected structure
+                # Look for a widget that contains a Gtk.Image as its last child
+                if isinstance(child, Gtk.Widget):
+                    last_child = child.get_last_child()
+                    if last_child and isinstance(last_child, Gtk.Image):
+                        # Hide the Gtk.Image (edit button)
+                        last_child.set_visible(False)
+                        break
+                child = child.get_next_sibling()
