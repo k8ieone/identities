@@ -1,0 +1,21 @@
+using Gtk 4.0;
+using Adw 1;
+
+// Navigation pages for split-view content
+template $IdViewer : Adw.NavigationPage {
+  child: Adw.NavigationView viewer_nav_view {
+    Adw.NavigationPage {
+      title: "Select a password";
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          show-title: false;
+        }
+        content: Adw.StatusPage {
+          title: "No password selected";
+          description: "Select a password entry to view";
+        };
+      };
+    }
+  };
+}

@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $IdentitiesWindow : Adw.ApplicationWindow {
-  title: "Identities";
+  title: _("Identities");
   default-height: 450;
   default-width: 800;
   Adw.Breakpoint brkpoint {
@@ -11,171 +11,11 @@ template $IdentitiesWindow : Adw.ApplicationWindow {
       splitview.collapsed: true;
     }
   }
-  content: setup_wizard;
+  content: splitview;
 }
 
 Adw.NavigationSplitView splitview {
-  sidebar: password_browser;
-  content: password_viewer_navigation;
-}
-
-Adw.NavigationView setup_wizard {
-  Adw.NavigationPage {
-    title: "Welcome to Identities";
-    child: Adw.ToolbarView {
-      [top]
-      Adw.HeaderBar {
-        show-title: false;
-        [end]
-        Gtk.MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Menu");
-          menu-model: primary_menu;
-        }
-      }
-      content: Adw.StatusPage {
-        title: "Welcome to Identities";
-        description: "The standard unix password manager for GNOME";
-        child: Adw.Clamp {
-          maximum-size: 250;
-          child: Gtk.Button start {
-            styles ["suggested-action", "pill"]
-            label: "Let's get started!";
-            action-name: "win.start";
-          };
-        };
-      };
-    };
-  }
-  Adw.NavigationPage store_setup {
-    title: "Setup your stores";
-    child: Adw.ToolbarView {
-      [top]
-      Adw.HeaderBar {
-        show-title: false;
-        [end]
-        Gtk.MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Menu");
-          menu-model: primary_menu;
-        }
-      }
-      content: Adw.StatusPage {
-        title: "Setup your password stores";
-        description: "The below button will take you to the settings where you can configure your stores";
-        child: Adw.Clamp {
-          maximum-size: 250;
-          child: Gtk.Box {
-            orientation: vertical;
-            Gtk.Button open_settings {
-              styles ["suggested-action", "pill"]
-              label: "Open settings";
-              action-name: "win.open_settings";
-            }
-            Gtk.Button settings_done {
-              styles ["pill"]
-              label: "All set!";
-              action-name: "win.settings_done";
-            }
-          };
-        };
-      };
-    };
-  }
-}
-
-Adw.NavigationPage store_selection {
-  title: "Select your store";
-  child: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      show-title: false;
-      [end]
-      Gtk.MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Menu");
-        menu-model: primary_menu;
-      }
-    }
-    content: Gtk.ScrolledWindow {
-      child: Adw.StatusPage {
-        title: "Select your password store";
-        Adw.Clamp stores_selector_clamp {
-          maximum-size: 320;
-          // Built in code - see window.build_stores
-        }
-      };
-    };
-  };
-}
-
-Adw.PreferencesDialog options_dialog {
-  content-height: 300;
-  content-width: 300;
-  child: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-    }
-    content: Gtk.ScrolledWindow {
-      child: Adw.PreferencesPage {
-        title: "Configure your password stores";
-        Adw.Clamp stores_editor_clamp {
-          maximum-size: 280;
-          // Built in code - see window.build_stores
-        }
-      };
-    };
-  };
-}
-
-
-// Navigation pages for split-view content
-Adw.NavigationPage password_viewer_navigation {
-  child: Adw.NavigationView viewer_nav_view {
-    Adw.NavigationPage {
-      title: "Select a password";
-      child: Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {
-          show-title: false;
-        }
-        content: Adw.StatusPage {
-          title: "No password selected";
-          description: "Select a password entry to view";
-        };
-      };
-    }
-  };
-}
-
-
-// Navigation pages for split-view sidebar
-// Mostly built in code - see window.build_navigation_page()
-Adw.NavigationPage password_browser {
-  child: Adw.NavigationView browser_nav_view {
-  };
-}
-
-
-// Menus
-menu primary_menu {
-  section {
-    item {
-      label: _("_Preferences");
-      action: "win.open_settings";
-    }
-
-    item {
-      label: _("_Keyboard Shortcuts");
-      action: "win.show-help-overlay";
-    }
-
-    item {
-      label: _("_About Identities");
-      action: "app.about";
-    }
-  }
+  show-content: true;
+  // sidebar: $IdBrowser browser_root {}; - see window.store_selection_done()
+  // content: password_viewer_navigation; - see window.store_selection_done()
 }

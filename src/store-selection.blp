@@ -1,0 +1,39 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $StoreSelectionWindow : Adw.ApplicationWindow {
+  title: "Store selection";
+  default-height: 450;
+  default-width: 800;
+  content: Adw.NavigationPage {
+    title: _("Select your Store");
+    child: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        [end]
+        $IdMenuButton {}
+      }
+      content: Gtk.ScrolledWindow {
+        child: Adw.StatusPage {
+          // title: "Select your password store";
+          Adw.Clamp {
+            maximum-size: 320;
+            Gtk.Box {
+              spacing: 20;
+              orientation: vertical;
+              Adw.PreferencesGroup stores_group {
+                // Built in code, see store_selection.build_stores
+              }
+              Adw.PreferencesGroup {
+                Adw.ButtonRow {
+                  title: _("Manage Password Stores");
+                  activated => $do_activate_settings();
+                }
+              }
+            }
+          }
+        };
+      };
+    };
+  };
+}

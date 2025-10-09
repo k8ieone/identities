@@ -4,7 +4,18 @@ gnome = import('gnome')
 blueprints = custom_target('blueprints',
   input: files(
     'window.blp',
-    'gtk/help-overlay.blp',
+    'shortcuts-dialog.blp',
+    'components/menu-button.blp',
+    'components/settings/settings-dialog.blp',
+    'components/settings/settings-store-row.blp',
+    'components/selection/selection-store-row.blp',
+    'components/main/browser.blp',
+    'components/main/browser-page.blp',
+    'components/main/viewer.blp',
+    'components/main/viewer-page.blp',
+    'components/main/viewer-page-row.blp',
+    'setup-wizard.blp',
+    'store-selection.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -39,7 +50,18 @@ identities_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'passutils.py'
+  'passutils.py',
+  'components/menu_button.py',
+  'components/settings/settings_dialog.py',
+  'components/settings/settings_store_row.py',
+  'components/selection/selection_store_row.py',
+  'components/main/browser.py',
+  'components/main/browser_page.py',
+  'components/main/viewer.py',
+  'components/main/viewer_page.py',
+  'components/main/viewer_page_row.py',
+  'setup_wizard.py',
+  'store_selection.py'
 ]
 
 install_data(identities_sources, install_dir: moduledir)

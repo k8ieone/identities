@@ -1,0 +1,31 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $IdViewerPage : Adw.NavigationPage {
+  hidden => $on_page_hiden();
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+    content: Adw.ToastOverlay toast_overlay {
+      child: Adw.StatusPage {
+        Adw.Clamp {
+          maximum-size: 450;
+          child: Gtk.Box {
+            orientation: vertical;
+            spacing: 20;
+            Adw.PreferencesGroup rows_group {
+              // title: _("some/password");
+              // description: _("/what/ever/some/password");
+              separate-rows: false;
+            }
+            Gtk.Button {
+              label: _("Edit");
+              action-name: "win.edit";
+              styles ["suggested-action", "pill"]
+            }
+          };
+        }
+      };
+    };
+  };
+}

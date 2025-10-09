@@ -1,0 +1,66 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $OnboardingWindow : Adw.ApplicationWindow {
+  title: "Identities Setup";
+  default-height: 450;
+  default-width: 800;
+  content: setup_wizard;
+}
+
+Adw.NavigationView setup_wizard {
+  Adw.NavigationPage {
+    title: "Welcome to Identities";
+    child: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        show-title: false;
+        [end]
+      $IdMenuButton {}
+      }
+      content: Adw.StatusPage {
+        title: "Welcome to Identities";
+        description: "The standard unix password manager for GNOME";
+        child: Adw.Clamp {
+          maximum-size: 250;
+          child: Gtk.Button {
+            styles ["suggested-action", "pill"]
+            label: "Let's get started!";
+            clicked => $on_wizard_started();
+          };
+        };
+      };
+    };
+  }
+  Adw.NavigationPage store_setup {
+    title: "Setup your stores";
+    child: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        show-title: false;
+        [end]
+        $IdMenuButton {}
+      }
+      content: Adw.StatusPage {
+        title: "Setup your password stores";
+        description: "The below button will take you to the settings where you can configure your stores";
+        child: Adw.Clamp {
+          maximum-size: 250;
+          child: Gtk.Box {
+            orientation: vertical;
+            Gtk.Button {
+              styles ["suggested-action", "pill"]
+              label: "Open settings";
+              clicked => $on_settings_open();
+            }
+            Gtk.Button {
+              styles ["pill"]
+              label: "All set!";
+              clicked => $on_wizard_done();
+            }
+          };
+        };
+      };
+    };
+  }
+}

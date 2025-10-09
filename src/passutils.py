@@ -1,6 +1,7 @@
 from pathlib import Path
 from gnupg import GPG
 
+# TODO: Get rid of the class, helper functions are enough
 class Store():
 
     def __init__(self, store_dir):
@@ -15,3 +16,13 @@ class Store():
         gpg = GPG(use_agent=True)
         with open(path, 'rb') as key_file:
             return str(gpg.decrypt_file(key_file))
+
+def list_dir(path):
+    dirs = [x for x in path.iterdir() if x.is_dir()]
+    keys = list(path.glob('*.gpg'))
+    return dirs, keys
+
+def decrypt(path):
+    gpg = GPG(use_agent=True)
+    with open(path, 'rb') as key_file:
+        return str(gpg.decrypt_file(key_file))
