@@ -1,0 +1,12 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $IdBrowser : Adw.NavigationPage {
+  child: Adw.NavigationView browser_nav_view {
+    // IdBrowserPage added through code to reflect the actual store root - see browser.__init__()
+    // $IdBrowserPage {
+    //   title: "Store root";
+    //   directory: "/";
+    // }
+  };
+}

@@ -1,13 +1,16 @@
 {
     "app-id" : "one.k8ie.Identities",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "48",
+    "runtime-version" : "49",
     "sdk" : "org.gnome.Sdk",
     "command" : "identities",
     "finish-args" : [
         "--share=network",
         "--share=ipc",
-        "--filesystem=~/.gnupg",
+        "--filesystem=~/.gnupg/public-keys.d/pubring.db:ro",
+        "--filesystem=~/.gnupg/pubring.kbx:ro",
+        "--filesystem=~/.gnupg/common.conf:ro",
+        "--socket=gpg-agent",
         "--socket=fallback-x11",
         "--talk-name=org.freedesktop.secrets",
         "--talk-name=org.gnome.keyring.SystemPrompter",
@@ -38,7 +41,7 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/blueprint-compiler",
-                    "tag": "v0.16.0"
+                    "tag": "v0.18.0"
                 }
             ]
         },
@@ -50,7 +53,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/k8ieone/identities",
-                    "tag" : "the-chosen-one"
+                    "tag" : "refactor"
                 }
             ]
         }

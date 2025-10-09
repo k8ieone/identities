@@ -24,19 +24,25 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
+
+from .settings_dialog import SettingsDialog
 from .window import IdentitiesWindow
+from .setup_wizard import OnboardingWindow
+from .store_selection import StoreSelectionWindow
 
 
 class IdentitiesApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self):
+    def __init__(self, version):
         super().__init__(application_id='one.k8ie.Identities',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
                          resource_base_path='/one/k8ie/Identities')
+        self.version = version
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
+        self.settings = Gio.Settings.new("one.k8ie.Identities")
 
     def do_activate(self):
         """Called when the application is activated.
@@ -46,15 +52,23 @@ class IdentitiesApplication(Adw.Application):
         """
         win = self.props.active_window
         if not win:
-            win = IdentitiesWindow(application=self)
-        win.present()
+            if len(self.settings.get_strv("stores")) == 1:
+                # Skip both setup wizard and store selection if only one store is configured
+                win = IdentitiesWindow(self.settings.get_strv("stores")[0], application=self)
+            elif len(self.settings.get_strv("stores")) > 1:
+                # Skip setup wizard and jump to store selection if more stores are configured
+                win = StoreSelectionWindow(application=self)
+            else:
+                # Run the setup wizard
+                win = OnboardingWindow(application=self)
+            win.present()
 
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(application_name='Identities',
                                 application_icon='one.k8ie.Identities',
                                 developer_name='Kateřina Medvědová',
-                                version='0.1.4',
+                                version=self.version,
                                 developers=['Kateřina Medvědová https://github.com/k8ieone'],
                                 copyright='© 2025 Kateřina Medvědová',
                                 license_type=Gtk.License(3),
@@ -74,7 +88,7 @@ class IdentitiesApplication(Adw.Application):
 
     def on_preferences_action(self, widget, _):
         """Callback for the app.preferences action."""
-        print('app.preferences action activated')
+        SettingsDialog().show(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.
@@ -94,5 +108,5 @@ class IdentitiesApplication(Adw.Application):
 
 def main(version):
     """The application's entry point."""
-    app = IdentitiesApplication()
+    app = IdentitiesApplication(version)
     return app.run(sys.argv)
