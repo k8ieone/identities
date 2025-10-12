@@ -5,15 +5,12 @@
     "sdk" : "org.gnome.Sdk",
     "command" : "identities",
     "finish-args" : [
-        "--share=network",
         "--share=ipc",
         "--filesystem=~/.gnupg/public-keys.d/pubring.db:ro",
         "--filesystem=~/.gnupg/pubring.kbx:ro",
         "--filesystem=~/.gnupg/common.conf:ro",
         "--socket=gpg-agent",
         "--socket=fallback-x11",
-        "--talk-name=org.freedesktop.secrets",
-        "--talk-name=org.gnome.keyring.SystemPrompter",
         "--device=dri",
         "--socket=wayland"
     ],
@@ -31,20 +28,6 @@
     "modules" : [
         "pyotp.json",
         "python-gnupg.json",
-        {
-            "name": "blueprint-compiler",
-            "buildsystem": "meson",
-            "cleanup": [
-                "*"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/blueprint-compiler",
-                    "tag": "v0.18.0"
-                }
-            ]
-        },
         {
             "name" : "identities",
             "builddir" : true,
