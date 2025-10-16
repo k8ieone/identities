@@ -17,15 +17,21 @@ You can get Identities both natively and as a Flatpak.
 
 ### Flatpak
 
-There is not any official release *yet*. You can get the latest preview build as an artifact from [GitHub Actions](https://github.com/k8ieone/identities/actions/workflows/flatpak.yml).
+<a href='https://flathub.org/en/apps/one.k8ie.Identities'>
+    <img width='240' alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en'/>
+</a>
 
-Install it using `flatpak install identities.flatpak`.
+Release builds are available on [Flathub](https://flathub.org/en/apps/one.k8ie.Identities)!
 
-Note: The Flatpak can be buggy - see [#32](https://github.com/k8ieone/identities/issues/32). If you're planning on using Identities I recommend using one of the native options below.
+Install using `flatpak install one.k8ie.Identities`.
+
+Brave souls can get the latest preview build as an artifact from [GitHub Actions](https://github.com/k8ieone/identities/actions/workflows/flatpak.yml).
+
+Note: GPG in Flatpak can be buggy - see [#32](https://github.com/k8ieone/identities/issues/32). If you run into issues with GPG freezig or not being available, please open an issue. I'd also recommend you try the native builds listed below.
 
 ### Arch Linux
 
-Available on the AUR! Install using you favorite [AUR helper](https://wiki.archlinux.org/title/AUR_helpers) or [install yourself](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages).
+Available on the AUR! Install using you favorite [AUR helper](https://wiki.archlinux.org/title/AUR_helpers) or [install manually](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages).
 
 - [Stable package](https://aur.archlinux.org/packages/identities)
 - [Development package](https://aur.archlinux.org/packages/identities-git)
