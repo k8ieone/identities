@@ -60,18 +60,18 @@
   <url type="vcs-browser">https://github.com/k8ieone/identities</url>
 
   <releases>
+    <release version="0.2.1" date="2025-10-16">
+      <description>
+        <ul>
+          <li>Updated Flathub metadata</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.2.0" date="2025-10-09">
       <description>
         <p>Initial Flatpak release</p>
         <ul>
           <li>Huge refactor</li>
-        </ul>
-      </description>
-    </release>
-    <release version="0.2.1" date="2025-10-16">
-      <description>
-        <ul>
-          <li>Updated Flathub metadata</li>
         </ul>
       </description>
     </release>
