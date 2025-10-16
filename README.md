@@ -18,7 +18,7 @@ You can get Identities both natively and as a Flatpak.
 ### Flatpak
 
 <a href='https://flathub.org/en/apps/one.k8ie.Identities'>
-    <img width='240' alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en'/>
+    <img height='80' alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en'/>
 </a>
 
 Release builds are available on [Flathub](https://flathub.org/en/apps/one.k8ie.Identities)!
