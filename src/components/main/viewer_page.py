@@ -26,6 +26,7 @@ from pathlib import Path
 from . import passutils
 
 from .viewer_page_row import IdViewerPageRow
+from .editor_dialog import IdEditorDialog
 
 @Gtk.Template(resource_path='/one/k8ie/Identities/components/main/viewer-page.ui')
 class IdViewerPage(Adw.NavigationPage):
@@ -40,19 +41,38 @@ class IdViewerPage(Adw.NavigationPage):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.otp_rows = []
+        self.rows = []
         if self.root != "":
             rel_path = Path(self.file).relative_to(Path(self.root))
             self.rows_group.set_description(str(rel_path))
         self.rows_group.set_title(Path(self.file).stem)
-        decrypted_file = passutils.decrypt(self.file)
-        for index, row in enumerate(decrypted_file.splitlines()):
+        self.decrypted_text = passutils.decrypt(self.file)
+        self.create_children()
+
+    def delete_children(self):
+        for widget in self.rows:
+            self.rows_group.remove(widget)
+        self.rows = []
+
+    def create_children(self):
+        for index, row in enumerate(self.decrypted_text.splitlines()):
             row_widget = IdViewerPageRow(content=row, index=index, toast_overlay=self.toast_overlay)
             self.rows_group.add(row_widget)
-            if row.startswith("otpauth://totp"):
-                self.otp_rows.append(row_widget)
+            self.rows.append(row_widget)
+
+    def refresh(self, *args):
+        self.decrypted_text = passutils.decrypt(self.file)
+        self.delete_children()
+        self.create_children()
 
     @Gtk.Template.Callback()
     def on_page_hiden(self, page):
-        for widget in self.otp_rows:
+        for widget in self.rows:
             widget.cancel_task()
+
+    @Gtk.Template.Callback()
+    def edit_password(self, widget):
+        # TODO: pass the file path
+        d = IdEditorDialog(text_content=self.decrypted_text)
+        d.connect("closed", self.refresh)
+        d.present(parent=self.get_root())

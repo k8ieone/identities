@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $IdEditorDialog : Adw.Dialog {
+  title: "editor";
+  //follows-content-size: true;
+  content-width: 400;
+  content-height: 200;
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+      [start]
+      Gtk.Button {
+        label: "Discard";
+        clicked => $discard();
+      }
+      [end]
+      Gtk.Button {
+        label: "Save";
+        styles ["suggested-action"]
+        clicked => $save();
+      }
+    }
+    content: Gtk.ScrolledWindow {
+      child: Gtk.TextView text_view {
+        monospace: true;
+        left-margin: 10;
+        // buffer: Gtk.TextBuffer {
+        //   modified-changed => $modified();
+        // };
+      };
+    };
+  };
+}

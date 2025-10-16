@@ -18,12 +18,12 @@ template $IdViewerPage : Adw.NavigationPage {
               // description: _("/what/ever/some/password");
               separate-rows: false;
             }
-            // TODO: Edit button
-            // Gtk.Button {
-            //   label: _("Edit");
-            //   action-name: "win.edit";
-            //   styles ["suggested-action", "pill"]
-            // }
+            Gtk.Button {
+              label: _("Edit");
+              //action-name: "win.edit";
+              styles ["suggested-action", "pill"]
+              clicked => $edit_password();
+            }
           };
         }
       };

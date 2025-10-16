@@ -12,6 +12,7 @@
     <file preprocess="xml-stripblanks">components/main/viewer.ui</file>
     <file preprocess="xml-stripblanks">components/main/viewer-page.ui</file>
     <file preprocess="xml-stripblanks">components/main/viewer-page-row.ui</file>
+    <file preprocess="xml-stripblanks">components/editor/editor-dialog.ui</file>
     <file preprocess="xml-stripblanks">setup-wizard.ui</file>
     <file preprocess="xml-stripblanks">store-selection.ui</file>
   </gresource>
