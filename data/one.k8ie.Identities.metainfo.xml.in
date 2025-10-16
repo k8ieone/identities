@@ -11,17 +11,22 @@
     <url>https://k8ie.one/</url>
   </developer>
   <update_contact>k8ie_AT_mcld.eu</update_contact>
-  <summary>Modern password-store client made for GNOME</summary>
-
+  <summary>Passwords at hand</summary>
   <description>
+    <p>Modern password-store <code>pass</code> client with responsive design.</p>
     <p>Features include:</p>
     <ul>
       <li>Adaptive UI - works great on phones and small screens</li>
       <li>Supports as many arbitrary attributes as you want</li>
       <li>Generates TOTPs (even several per file)</li>
-      <li>Support for multiple password stores in arbitrary locations</li>
+      <li>Support for adding multiple password stores in arbitrary locations</li>
     </ul>
   </description>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#9a9996</color>
+    <color type="primary" scheme_preference="dark">#3d3846</color>
+  </branding>
 
   <requires>
     <display_length compare="ge">360</display_length>
@@ -60,6 +65,13 @@
         <p>Initial Flatpak release</p>
         <ul>
           <li>Huge refactor</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.2.1" date="2025-10-16">
+      <description>
+        <ul>
+          <li>Updated Flathub metadata</li>
         </ul>
       </description>
     </release>
