@@ -113,7 +113,8 @@ class IdViewerPageRow(Adw.ActionRow):
 
     def cancel_task(self):
         """Called by IdViewerPage when hiding the viewer page"""
-        self.otp_task.get_cancellable().cancel()
+        if hasattr(self, "otp_task"):
+            self.otp_task.get_cancellable().cancel()
 
     def obliterate_edit_button(self):
         """Hack to hide the edit button"""

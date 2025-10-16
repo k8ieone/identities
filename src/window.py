@@ -25,7 +25,6 @@ from gi.repository import Gdk
 
 from pathlib import Path
 
-from .passutils import Store
 from .settings_dialog import SettingsDialog
 from .menu_button import IdMenuButton
 from .browser import IdBrowser
@@ -54,7 +53,6 @@ class IdentitiesWindow(Adw.ApplicationWindow):
         self.cur_dir = Path(store)
         self.cur_viewer_page = None
         self.password_store_dir = Path(store)
-        self.store = Store(store_dir=self.password_store_dir)
         self.splitview.set_sidebar(self.browser)
         self.splitview.set_content(self.viewer)
 
