@@ -33,7 +33,6 @@ class IdViewerPage(Adw.NavigationPage):
     __gtype_name__ = 'IdViewerPage'
 
     file = GObject.Property(type=str)
-    # root is optional, only used to set the password group description
     root = GObject.Property(type=str)
 
     rows_group = Gtk.Template.Child()
@@ -72,7 +71,8 @@ class IdViewerPage(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def edit_password(self, widget):
-        # TODO: pass the file path
-        d = IdEditorDialog(text_content=self.decrypted_text)
+        d = IdEditorDialog(text_content=self.decrypted_text, file=self.file, root=self.root)
         d.connect("closed", self.refresh)
         d.present(parent=self.get_root())
+
+    # TODO: Add shortcut to edit a password
