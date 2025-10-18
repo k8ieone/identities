@@ -42,7 +42,11 @@
   <screenshots>
     <screenshot type="default">
       <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/password.png</image>
-      <caption>Viewing a password</caption>
+      <caption>Viewer</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/editor.png</image>
+      <caption>Editor</caption>
     </screenshot>
     <screenshot>
       <image type="source">https://github.com/k8ieone/identities/raw/refs/heads/the-chosen-one/misc/screenshots/store_selection.png</image>
@@ -60,6 +64,14 @@
   <url type="vcs-browser">https://github.com/k8ieone/identities</url>
 
   <releases>
+    <release version="0.2.2" date="2025-10-18">
+      <description>
+        <ul>
+          <li>Updated screenshots</li>
+          <li>Support for editing passwords!</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.2.1" date="2025-10-16">
       <description>
         <ul>
