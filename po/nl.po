@@ -1,151 +1,152 @@
-# Dutch translations for k package.
-# Copyright (C) 2025 THE k'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the k package.
-#  <vistausss@fastmail.com>, 2025.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: k 8ie\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-29 10:35+0100\n"
-"PO-Revision-Date: 2025-10-29 10:50+0100\n"
-"Last-Translator:  <vistausss@fastmail.com>\n"
-"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"PO-Revision-Date: 2025-10-29 11:53+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/one.k8ie.Identities.desktop.in:2
 #: data/one.k8ie.Identities.metainfo.xml.in:5
 msgid "Identities"
-msgstr ""
+msgstr "Identiteiten"
 
 #: data/one.k8ie.Identities.desktop.in:8
 msgid "password;logins;manager;"
-msgstr ""
+msgstr "wachtwoord;inloggen;manager;beheerder;"
 
 #: data/one.k8ie.Identities.desktop.in:9
 msgid "Graphical client for zx2c4's password-store"
-msgstr ""
+msgstr "Een grafische toepassing op basis van zx2c4's password-store"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:14
 msgid "Passwords at hand"
-msgstr ""
+msgstr "Je wachtwoorden bij de hand"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:16
 msgid "Modern password-store <code>pass</code> client with responsive design."
-msgstr ""
+msgstr "Een moderne toepassing op basis van password-store (gebaseerd op <code>pass</code> met een ontwerp dat zich aanpast aan de vensterafmetingen."
 
 #: data/one.k8ie.Identities.metainfo.xml.in:17
 msgid "Features include:"
-msgstr ""
+msgstr "Kenmerken:"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:19
 msgid "Adaptive UI - works great on phones and small screens"
-msgstr ""
+msgstr "Aanpasbare vormgeving - ook geschikt voor telefoons en kleine schermen"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:20
 msgid "Supports as many arbitrary attributes as you want"
-msgstr ""
+msgstr "Ondersteuning voor zo veel attributen als gewenst"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:21
 msgid "Generates TOTPs (even several per file)"
-msgstr ""
+msgstr "Maak TOTP's aan (meerdere per bestand mogelijk)"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:22
 msgid "Support for adding multiple password stores in arbitrary locations"
-msgstr ""
+msgstr "Ondersteuning voor wachtwoorden op ongebruikelijke plaatsen"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:45
 msgid "Viewer"
-msgstr ""
+msgstr "Weergave"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:49
 msgid "Editor"
-msgstr ""
+msgstr "Bewerker"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:53 src/store-selection.blp:5
 msgid "Store selection"
-msgstr ""
+msgstr "Opslagkeuze"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:57
 msgid "Mobile view"
-msgstr ""
+msgstr "Mobiele weergave"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:70
 msgid "Updated screenshots"
-msgstr ""
+msgstr "Bijgewerkt: schermfoto's"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:71
 msgid "Support for editing passwords!"
-msgstr ""
+msgstr "Nieuw: bewerk wachtwoorden!"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:78
 msgid "Updated Flathub metadata"
-msgstr ""
+msgstr "Bijgewerkt: Flathub-metagegevens"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:84
 msgid "Initial Flatpak release"
-msgstr ""
+msgstr "Allereerste Flatpakversie"
 
 #: data/one.k8ie.Identities.metainfo.xml.in:86
 msgid "Huge refactor"
-msgstr ""
+msgstr "Verbeterd: alles"
 
 #: data/one.k8ie.Identities.gschema.xml:6
 msgid "Configured password stores"
-msgstr ""
+msgstr "Ingestelde wachtwoordopslaglocaties"
 
 #: data/one.k8ie.Identities.gschema.xml:7
 msgid "List of configured password stores"
-msgstr ""
+msgstr "Een lijst met ingestelde wachtwoordopslaglocaties"
 
 #: src/store-selection.blp:9
 msgid "Select your Store"
-msgstr ""
+msgstr "Kies een opslaglocatie"
 
 #: src/store-selection.blp:29
 msgid "Manage Password Stores"
-msgstr ""
+msgstr "Opslaglocaties beheren"
 
 #: src/components/editor/editor-dialog.blp:13
 msgid "Discard"
-msgstr ""
+msgstr "Verwerpen"
 
 #: src/components/editor/editor-dialog.blp:18
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: src/components/main/viewer.blp:15
 msgid "No password selected"
-msgstr ""
+msgstr "Geen wachtwoord gekozen"
 
 #: src/components/main/viewer.blp:16
 msgid "Select a password entry to view"
-msgstr ""
+msgstr "Kies een te bekijken item"
 
 #: src/components/main/viewer-page.blp:22
 msgid "Edit"
-msgstr ""
+msgstr "Bewerken"
 
 #: src/components/settings/settings-dialog.blp:13
 msgid "Configure your password stores"
-msgstr ""
+msgstr "Stel je wachtwoordopslaglocaties in"
 
 #: src/components/menu-button.blp:6
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/components/menu-button.blp:13
 msgid "_Preferences"
-msgstr ""
+msgstr "_Voorkeuren"
 
 #: src/components/menu-button.blp:18
 msgid "_Keyboard Shortcuts"
-msgstr ""
+msgstr "_Sneltoetsen"
 
 #: src/components/menu-button.blp:23
 msgid "_About Identities"
-msgstr ""
+msgstr "Over _Identiteiten"
