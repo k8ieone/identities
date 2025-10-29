@@ -1,0 +1,153 @@
+# Czech translations for k package.
+# Copyright (C) 2025 THE k'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the k package.
+#  <k8ie@mcld.eu>, 2025.
+# Kateřina Medvědová <k8ie@mcld.eu>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: k 8ie\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-29 10:35+0100\n"
+"PO-Revision-Date: 2025-10-29 10:40+0100\n"
+"Last-Translator: Kateřina Medvědová <k8ie@mcld.eu>\n"
+"Language-Team: Czech\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Gtranslator 49.0\n"
+
+#: data/one.k8ie.Identities.desktop.in:2
+#: data/one.k8ie.Identities.metainfo.xml.in:5
+msgid "Identities"
+msgstr "Identities"
+
+#: data/one.k8ie.Identities.desktop.in:8
+msgid "password;logins;manager;"
+msgstr ""
+
+#: data/one.k8ie.Identities.desktop.in:9
+msgid "Graphical client for zx2c4's password-store"
+msgstr "Grafický klient pro zx2c4 password-store"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:14
+msgid "Passwords at hand"
+msgstr "Hesla po ruce"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:16
+msgid "Modern password-store <code>pass</code> client with responsive design."
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:17
+msgid "Features include:"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:19
+msgid "Adaptive UI - works great on phones and small screens"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:20
+msgid "Supports as many arbitrary attributes as you want"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:21
+msgid "Generates TOTPs (even several per file)"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:22
+msgid "Support for adding multiple password stores in arbitrary locations"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:45
+msgid "Viewer"
+msgstr "Zobrazovač"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:49
+msgid "Editor"
+msgstr "Editor"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:53 src/store-selection.blp:5
+msgid "Store selection"
+msgstr "Výběr úložiště"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:57
+msgid "Mobile view"
+msgstr "Mobilní zobrazení"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:70
+msgid "Updated screenshots"
+msgstr "Aktualizované snímky obrazovky"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:71
+msgid "Support for editing passwords!"
+msgstr "Podpora pro úpravu hesel!"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:78
+msgid "Updated Flathub metadata"
+msgstr "Aktualizovaná Flathub metadata"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:84
+msgid "Initial Flatpak release"
+msgstr "První vydání pomocí Flatpaku"
+
+#: data/one.k8ie.Identities.metainfo.xml.in:86
+msgid "Huge refactor"
+msgstr "Obrovský refactor"
+
+#: data/one.k8ie.Identities.gschema.xml:6
+msgid "Configured password stores"
+msgstr "Nastavená úložiště"
+
+#: data/one.k8ie.Identities.gschema.xml:7
+msgid "List of configured password stores"
+msgstr "Seznam nastavených úložišť"
+
+#: src/store-selection.blp:9
+msgid "Select your Store"
+msgstr "Vyberte své Úložiště"
+
+#: src/store-selection.blp:29
+msgid "Manage Password Stores"
+msgstr "Správa úložišť hesel"
+
+#: src/components/editor/editor-dialog.blp:13
+msgid "Discard"
+msgstr "Zahodit změny"
+
+#: src/components/editor/editor-dialog.blp:18
+msgid "Save"
+msgstr "Uložit"
+
+#: src/components/main/viewer.blp:15
+msgid "No password selected"
+msgstr "Není vybráno žádné heslo"
+
+#: src/components/main/viewer.blp:16
+msgid "Select a password entry to view"
+msgstr "Vyberte heslo pro zobrazení"
+
+#: src/components/main/viewer-page.blp:22
+msgid "Edit"
+msgstr "Upravit"
+
+#: src/components/settings/settings-dialog.blp:13
+msgid "Configure your password stores"
+msgstr "Nastavte svá úložiště hesel"
+
+#: src/components/menu-button.blp:6
+msgid "Menu"
+msgstr "Menu"
+
+#: src/components/menu-button.blp:13
+msgid "_Preferences"
+msgstr "_Nastavení"
+
+#: src/components/menu-button.blp:18
+msgid "_Keyboard Shortcuts"
+msgstr "_Klávesové Zkratky"
+
+#: src/components/menu-button.blp:23
+msgid "_About Identities"
+msgstr "_O Identities"
