@@ -1,0 +1,151 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-29 10:35+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/one.k8ie.Identities.desktop.in:2
+#: data/one.k8ie.Identities.metainfo.xml.in:5
+msgid "Identities"
+msgstr ""
+
+#: data/one.k8ie.Identities.desktop.in:8
+msgid "password;logins;manager;"
+msgstr ""
+
+#: data/one.k8ie.Identities.desktop.in:9
+msgid "Graphical client for zx2c4's password-store"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:14
+msgid "Passwords at hand"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:16
+msgid "Modern password-store <code>pass</code> client with responsive design."
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:17
+msgid "Features include:"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:19
+msgid "Adaptive UI - works great on phones and small screens"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:20
+msgid "Supports as many arbitrary attributes as you want"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:21
+msgid "Generates TOTPs (even several per file)"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:22
+msgid "Support for adding multiple password stores in arbitrary locations"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:45
+msgid "Viewer"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:49
+msgid "Editor"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:53 src/store-selection.blp:5
+msgid "Store selection"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:57
+msgid "Mobile view"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:70
+msgid "Updated screenshots"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:71
+msgid "Support for editing passwords!"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:78
+msgid "Updated Flathub metadata"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:84
+msgid "Initial Flatpak release"
+msgstr ""
+
+#: data/one.k8ie.Identities.metainfo.xml.in:86
+msgid "Huge refactor"
+msgstr ""
+
+#: data/one.k8ie.Identities.gschema.xml:6
+msgid "Configured password stores"
+msgstr ""
+
+#: data/one.k8ie.Identities.gschema.xml:7
+msgid "List of configured password stores"
+msgstr ""
+
+#: src/store-selection.blp:9
+msgid "Select your Store"
+msgstr ""
+
+#: src/store-selection.blp:29
+msgid "Manage Password Stores"
+msgstr ""
+
+#: src/components/editor/editor-dialog.blp:13
+msgid "Discard"
+msgstr ""
+
+#: src/components/editor/editor-dialog.blp:18
+msgid "Save"
+msgstr ""
+
+#: src/components/main/viewer.blp:15
+msgid "No password selected"
+msgstr ""
+
+#: src/components/main/viewer.blp:16
+msgid "Select a password entry to view"
+msgstr ""
+
+#: src/components/main/viewer-page.blp:22
+msgid "Edit"
+msgstr ""
+
+#: src/components/settings/settings-dialog.blp:13
+msgid "Configure your password stores"
+msgstr ""
+
+#: src/components/menu-button.blp:6
+msgid "Menu"
+msgstr ""
+
+#: src/components/menu-button.blp:13
+msgid "_Preferences"
+msgstr ""
+
+#: src/components/menu-button.blp:18
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/components/menu-button.blp:23
+msgid "_About Identities"
+msgstr ""
