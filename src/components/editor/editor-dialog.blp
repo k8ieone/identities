@@ -10,12 +10,12 @@ template $IdEditorDialog : Adw.Dialog {
       show-end-title-buttons: false;
       [start]
       Gtk.Button {
-        label: "Discard";
+        label: _("Discard");
         clicked => $discard();
       }
       [end]
       Gtk.Button {
-        label: "Save";
+        label: _("Save");
         styles ["suggested-action"]
         clicked => $save();
       }
