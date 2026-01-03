@@ -11,21 +11,14 @@ template $SettingsDialog : Adw.PreferencesDialog {
     content: Gtk.ScrolledWindow {
       child: Adw.PreferencesPage {
         title: _("Configure your password stores");
-        Adw.Clamp {
-          maximum-size: 280;
-          Gtk.Box {
-            spacing: 20;
-            orientation: vertical;
-            Adw.PreferencesGroup stores_group {
-              title: "Stores";
-              header-suffix: Gtk.Button {
-                icon-name: "list-add-symbolic";
-                styles ["flat"]
-                clicked => $on_settings_row_add();
-              };
-              // Store rows added in code, see settings_dialog.build_stores
-            }
-          }
+        Adw.PreferencesGroup stores_group {
+          title: "Stores";
+          header-suffix: Gtk.Button {
+            icon-name: "list-add-symbolic";
+            styles ["flat"]
+            clicked => $on_settings_row_add();
+          };
+          // Store rows added in code, see settings_dialog.build_stores
         }
       };
     };
