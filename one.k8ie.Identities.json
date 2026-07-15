@@ -1,44 +1,33 @@
 {
-    "app-id" : "one.k8ie.Identities",
-    "runtime" : "org.gnome.Platform",
-    "runtime-version" : "49",
-    "sdk" : "org.gnome.Sdk",
-    "command" : "identities",
-    "finish-args" : [
-        "--share=ipc",
-        "--filesystem=~/.gnupg/public-keys.d/pubring.db:ro",
-        "--filesystem=~/.gnupg/pubring.kbx:ro",
-        "--filesystem=~/.gnupg/common.conf:ro",
-        "--socket=gpg-agent",
-        "--socket=fallback-x11",
-        "--device=dri",
-        "--socket=wayland"
-    ],
-    "cleanup" : [
-        "/include",
-        "/lib/pkgconfig",
-        "/man",
-        "/share/doc",
-        "/share/gtk-doc",
-        "/share/man",
-        "/share/pkgconfig",
-        "*.la",
-        "*.a"
-    ],
-    "modules" : [
-        "pyotp.json",
-        "python-gnupg.json",
+  "app-id": "one.k8ie.Identities",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "50",
+  "sdk": "org.gnome.Sdk",
+  "command": "identities",
+  "finish-args": [
+    "--share=ipc",
+    "--filesystem=~/.gnupg/public-keys.d/pubring.db:ro",
+    "--filesystem=~/.gnupg/pubring.kbx:ro",
+    "--filesystem=~/.gnupg/common.conf:ro",
+    "--socket=gpg-agent",
+    "--socket=fallback-x11",
+    "--device=dri",
+    "--socket=wayland"
+  ],
+  "modules": [
+    "pyotp.json",
+    "python-gnupg.json",
+    {
+      "name": "identities",
+      "builddir": true,
+      "buildsystem": "meson",
+      "sources": [
         {
-            "name" : "identities",
-            "builddir" : true,
-            "buildsystem" : "meson",
-            "sources" : [
-                {
-                    "type" : "git",
-                    "url" : "https://github.com/k8ieone/identities",
-                    "tag" : "the-chosen-one"
-                }
-            ]
+          "type": "git",
+          "url": "https://github.com/k8ieone/identities",
+          "tag": "the-chosen-one"
         }
-    ]
+      ]
+    }
+  ]
 }
